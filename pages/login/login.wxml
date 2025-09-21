@@ -1,0 +1,132 @@
+<!--pages/login/login.wxml-->
+<view class="login-container">
+  <!-- 头部 -->
+  <view class="header">
+    <image class="logo" src="/assets/logo.png" mode="aspectFit"></image>
+    <text class="title">海绵冥想</text>
+    <text class="subtitle">开启你的冥想之旅</text>
+  </view>
+
+  <!-- 表单区域 -->
+  <view class="form-container">
+    <!-- 登录/注册切换 -->
+    <view class="type-switch">
+      <text 
+        class="type-item {{loginType === 'login' ? 'active' : ''}}" 
+        bindtap="switchType"
+      >登录</text>
+      <text class="type-separator">|</text>
+      <text 
+        class="type-item {{loginType === 'register' ? 'active' : ''}}" 
+        bindtap="switchType"
+      >注册</text>
+    </view>
+
+    <!-- 错误提示 -->
+    <view class="error-message" wx:if="{{error}}">
+      {{error}}
+    </view>
+
+    <!-- 登录表单 -->
+    <view wx:if="{{loginType === 'login'}}">
+      <view class="input-group">
+        <input
+          class="input"
+          type="text"
+          placeholder="用户名"
+          value="{{formData.username}}"
+          data-field="username"
+          bindinput="onInputChange"
+        />
+      </view>
+
+      <view class="input-group">
+        <input
+          class="input"
+          type="password"
+          placeholder="密码"
+          value="{{formData.password}}"
+          data-field="password"
+          bindinput="onInputChange"
+        />
+      </view>
+
+      <button 
+        class="submit-btn" 
+        type="primary" 
+        bindtap="onSubmit"
+        loading="{{loading}}"
+      >登录</button>
+
+      <!-- 快速访客登录 -->
+      <view class="quick-login">
+        <text class="quick-login-text" bindtap="onQuickLogin">快速体验（访客登录）</text>
+      </view>
+    </view>
+
+    <!-- 注册表单 -->
+    <view wx:if="{{loginType === 'register'}}">
+      <view class="input-group">
+        <input
+          class="input"
+          type="text"
+          placeholder="用户名（必填）"
+          value="{{formData.username}}"
+          data-field="username"
+          bindinput="onInputChange"
+        />
+      </view>
+
+      <view class="input-group">
+        <input
+          class="input"
+          type="text"
+          placeholder="昵称（选填）"
+          value="{{formData.nickname}}"
+          data-field="nickname"
+          bindinput="onInputChange"
+        />
+      </view>
+
+      <view class="input-group">
+        <input
+          class="input"
+          type="text"
+          placeholder="邮箱（选填）"
+          value="{{formData.email}}"
+          data-field="email"
+          bindinput="onInputChange"
+        />
+      </view>
+
+      <view class="input-group">
+        <input
+          class="input"
+          type="password"
+          placeholder="密码（至少6位）"
+          value="{{formData.password}}"
+          data-field="password"
+          bindinput="onInputChange"
+        />
+      </view>
+
+      <view class="input-group">
+        <input
+          class="input"
+          type="password"
+          placeholder="确认密码"
+          value="{{formData.confirmPassword}}"
+          data-field="confirmPassword"
+          bindinput="onInputChange"
+        />
+      </view>
+
+      <button 
+        class="submit-btn" 
+        type="primary" 
+        bindtap="onSubmit"
+        loading="{{loading}}"
+      >注册</button>
+    </view>
+  </view>
+</view>

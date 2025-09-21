@@ -1,0 +1,218 @@
+/* pages/checkin/checkin.wxss */
+.container {
+  height: 100vh;
+  background-color: var(--background);
+}
+
+.scroll-container {
+  height: 100%;
+  padding: 32rpx;
+}
+
+.loading-container,
+.error-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-text {
+  font-size: 32rpx;
+  color: var(--text-secondary);
+}
+
+.error-text {
+  font-size: 32rpx;
+  color: var(--text);
+  margin-bottom: 32rpx;
+  text-align: center;
+}
+
+/* 区域标题 */
+.section-title {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 24rpx;
+}
+
+/* 统计区域 */
+.stats-section {
+  margin-bottom: 48rpx;
+}
+
+.stats-grid {
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 24rpx;
+}
+
+.stat-card {
+  flex: 1;
+  background-color: var(--surface);
+  border-radius: 24rpx;
+  padding: 32rpx;
+  align-items: center;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.1);
+}
+
+.stat-value {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: var(--primary);
+  margin-bottom: 8rpx;
+}
+
+.stat-label {
+  font-size: 24rpx;
+  color: var(--text-secondary);
+}
+
+/* 日期选择器 */
+.date-picker-section {
+  margin-bottom: 48rpx;
+}
+
+.date-picker {
+  background-color: var(--surface);
+  border-radius: 24rpx;
+  padding: 24rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+}
+
+.picker-display {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.picker-display text {
+  font-size: 28rpx;
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* 记录区域 */
+.records-section {
+  margin-bottom: 48rpx;
+}
+
+.section-header {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24rpx;
+}
+
+.records-count {
+  font-size: 24rpx;
+  color: var(--text-secondary);
+}
+
+.records-list {
+  gap: 24rpx;
+}
+
+.record-card {
+  background-color: var(--surface);
+  border-radius: 16rpx;
+  padding: 24rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+}
+
+.record-header {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12rpx;
+}
+
+.record-type {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.record-duration {
+  font-size: 24rpx;
+  color: var(--primary);
+  font-weight: 500;
+}
+
+.record-time {
+  font-size: 22rpx;
+  color: var(--text-secondary);
+  margin-bottom: 8rpx;
+}
+
+.record-notes {
+  font-size: 22rpx;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.empty-records {
+  background-color: var(--surface);
+  border-radius: 16rpx;
+  padding: 64rpx 32rpx;
+  align-items: center;
+  text-align: center;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: var(--text-secondary);
+  margin-bottom: 32rpx;
+}
+
+/* 图表区域 */
+.chart-section {
+  margin-bottom: 48rpx;
+}
+
+.chart-placeholder {
+  background-color: var(--surface);
+  border-radius: 16rpx;
+  padding: 64rpx 32rpx;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+}
+
+.chart-text {
+  font-size: 28rpx;
+  color: var(--text);
+  font-weight: 600;
+  margin-bottom: 16rpx;
+}
+
+.chart-description {
+  font-size: 24rpx;
+  color: var(--text-secondary);
+}
+
+/* 响应式适配 */
+@media (max-width: 768px) {
+  .scroll-container {
+    padding: 16rpx;
+  }
+  
+  .stats-grid {
+    flex-direction: column;
+  }
+  
+  .stat-card {
+    margin-bottom: 16rpx;
+  }
+  
+  .record-card {
+    padding: 20rpx 16rpx;
+  }
+  
+  .empty-records,
+  .chart-placeholder {
+    padding: 48rpx 24rpx;
+  }
+}

@@ -1,0 +1,230 @@
+/* pages/friends/friends.wxss */
+.container {
+  height: 100vh;
+  background-color: var(--background);
+}
+
+.loading-container,
+.error-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 64rpx;
+}
+
+.loading-text {
+  font-size: 32rpx;
+  color: var(--text-secondary);
+}
+
+.error-text {
+  font-size: 32rpx;
+  color: var(--text);
+  margin-bottom: 32rpx;
+  text-align: center;
+}
+
+/* 标签页样式 */
+.tabs {
+  flex-direction: row;
+  background-color: var(--surface);
+  border-bottom: 2rpx solid var(--border);
+}
+
+.tab {
+  flex: 1;
+  padding: 32rpx;
+  text-align: center;
+  font-size: 28rpx;
+  color: var(--text-secondary);
+  border-bottom: 4rpx solid transparent;
+}
+
+.tab-active {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+  font-weight: 600;
+}
+
+/* 标签内容 */
+.tab-content {
+  padding: 32rpx;
+}
+
+.section-header {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32rpx;
+}
+
+.section-title {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.friends-count,
+.activities-count {
+  font-size: 24rpx;
+  color: var(--text-secondary);
+}
+
+/* 好友列表 */
+.friends-list {
+  gap: 24rpx;
+}
+
+.friend-card {
+  background-color: var(--surface);
+  border-radius: 16rpx;
+  padding: 24rpx;
+  flex-direction: row;
+  align-items: center;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+}
+
+.friend-avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 40rpx;
+  margin-right: 24rpx;
+}
+
+.friend-info {
+  flex: 1;
+}
+
+.friend-name {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 4rpx;
+}
+
+.friend-status {
+  font-size: 22rpx;
+  color: var(--text-secondary);
+}
+
+/* 动态列表 */
+.activities-list {
+  gap: 24rpx;
+}
+
+.activity-card {
+  background-color: var(--surface);
+  border-radius: 16rpx;
+  padding: 24rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+}
+
+.activity-header {
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 16rpx;
+}
+
+.activity-avatar {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 30rpx;
+  margin-right: 16rpx;
+}
+
+.activity-user {
+  flex: 1;
+}
+
+.user-name {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 4rpx;
+}
+
+.activity-time {
+  font-size: 20rpx;
+  color: var(--text-secondary);
+}
+
+.activity-content {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12rpx;
+}
+
+.activity-type {
+  font-size: 24rpx;
+  color: var(--text);
+  font-weight: 500;
+}
+
+.activity-duration {
+  font-size: 22rpx;
+  color: var(--primary);
+  font-weight: 500;
+}
+
+.activity-notes {
+  font-size: 22rpx;
+  color: var(--text-secondary);
+  font-style: italic;
+  padding: 12rpx;
+  background-color: var(--light-blue);
+  border-radius: 8rpx;
+}
+
+/* 空状态 */
+.empty-state {
+  background-color: var(--surface);
+  border-radius: 16rpx;
+  padding: 64rpx 32rpx;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: var(--text);
+  font-weight: 600;
+  margin-bottom: 16rpx;
+}
+
+.empty-subtext {
+  font-size: 24rpx;
+  color: var(--text-secondary);
+  margin-bottom: 32rpx;
+}
+
+/* 响应式适配 */
+@media (max-width: 768px) {
+  .tab-content {
+    padding: 16rpx;
+  }
+  
+  .friend-card,
+  .activity-card {
+    padding: 20rpx 16rpx;
+  }
+  
+  .friend-avatar {
+    width: 64rpx;
+    height: 64rpx;
+    margin-right: 16rpx;
+  }
+  
+  .activity-avatar {
+    width: 48rpx;
+    height: 48rpx;
+    margin-right: 12rpx;
+  }
+  
+  .empty-state {
+    padding: 48rpx 24rpx;
+  }
+}

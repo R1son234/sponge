@@ -1,0 +1,93 @@
+<!-- pages/home/home.wxml -->
+<view class="container">
+  <!-- 加载状态 -->
+  <view wx:if="{{loading}}" class="loading-container">
+    <text class="loading-text">加载中...</text>
+  </view>
+
+  <!-- 错误状态 -->
+  <view wx:if="{{error}}" class="error-container">
+    <text class="error-text">{{error}}</text>
+    <button class="button button-primary button-small" bindtap="retry">重试</button>
+  </view>
+
+  <!-- 正常内容 -->
+  <view wx:if="{{!loading && !error}}">
+    <scroll-view scroll-y="true" class="scroll-container" enhanced="{{true}}" show-scrollbar="{{false}}">
+      
+      <!-- 顶部欢迎区域 -->
+      <view class="welcome-section">
+        <text class="welcome-title">欢迎来到冥想世界</text>
+        <text class="welcome-subtitle">让心灵找到宁静，让生活回归平衡</text>
+      </view>
+
+      <!-- 今日统计卡片 -->
+      <view class="card stats-card">
+        <view class="stats-header">
+          <text class="stats-title">今日进展</text>
+          <view class="view-more" bindtap="navigateToCheckin">
+            <text class="view-more-text">查看更多</text>
+          </view>
+        </view>
+        
+        <view class="stats-row">
+          <view class="stat-item">
+            <text class="stat-value">{{stats.consecutiveDays || 0}}</text>
+            <text class="stat-label">连续天数</text>
+          </view>
+          <view class="stat-item">
+            <text class="stat-value">{{stats.totalTime || 0}}</text>
+            <text class="stat-label">总时长(分钟)</text>
+          </view>
+          <view class="stat-item">
+            <text class="stat-value">{{stats.totalSessions || 0}}</text>
+            <text class="stat-label">冥想次数</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 快速开始区域 -->
+      <view class="section">
+        <text class="section-title">快速开始</text>
+        <text class="section-subtitle">选择适合你的冥想时长</text>
+        
+        <view class="quick-start-grid">
+          <view 
+            wx:for="{{quickMeditations}}" 
+            wx:key="id" 
+            class="quick-start-card" 
+            bindtap="handleQuickStart" 
+            data-meditation="{{item}}"
+          >
+            <view class="quick-start-icon">
+              <icon type="{{item.icon}}" size="32" color="#4A90E2" />
+            </view>
+            <text class="quick-start-name">{{item.name}}</text>
+            <text class="quick-start-duration">{{item.duration}}分钟</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 冥想介绍区域 -->
+      <view class="section">
+        <text class="section-title">冥想指南</text>
+        <view class="card guide-card">
+          <view class="guide-header">
+            <icon type="book" size="24" color="#4A90E2" />
+            <text class="guide-title">新手入门</text>
+          </view>
+          <text class="guide-description">
+            冥想是一种古老的修炼方式，通过专注于呼吸、感受或思想，帮助我们达到内心的平静与专注。
+          </text>
+          <button 
+            class="button button-outline button-small" 
+            bindtap="navigateToMeditation"
+          >
+            了解更多
+          </button>
+        </view>
+      </view>
+
+    </scroll-view>
+  </view>
+</view>

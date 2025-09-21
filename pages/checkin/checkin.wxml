@@ -1,0 +1,95 @@
+<!-- pages/checkin/checkin.wxml -->
+<view class="container">
+  <!-- 加载状态 -->
+  <view wx:if="{{loading}}" class="loading-container">
+    <text class="loading-text">加载中...</text>
+  </view>
+
+  <!-- 错误状态 -->
+  <view wx:if="{{error}}" class="error-container">
+    <text class="error-text">{{error}}</text>
+    <button class="button button-primary button-small" bindtap="retry">重试</button>
+  </view>
+
+  <!-- 正常内容 -->
+  <view wx:if="{{!loading && !error}}">
+    <scroll-view scroll-y="true" class="scroll-container" enhanced="{{true}}" show-scrollbar="{{false}}">
+      
+      <!-- 顶部统计区域 -->
+      <view class="stats-section">
+        <text class="section-title">打卡统计</text>
+        
+        <view class="stats-grid">
+          <view class="stat-card">
+            <text class="stat-value">{{stats.consecutiveDays || 0}}</text>
+            <text class="stat-label">连续天数</text>
+          </view>
+          <view class="stat-card">
+            <text class="stat-value">{{stats.totalSessions || 0}}</text>
+            <text class="stat-label">总次数</text>
+          </view>
+          <view class="stat-card">
+            <text class="stat-value">{{formatTime(stats.totalTime || 0)}}</text>
+            <text class="stat-label">总时长</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 日期选择器 -->
+      <view class="date-picker-section">
+        <text class="section-title">选择日期</text>
+        <picker 
+          mode="date" 
+          value="{{selectedDate}}" 
+          bindchange="onDateChange"
+          class="date-picker"
+        >
+          <view class="picker-display">
+            <text>{{formatDate(selectedDate)}}</text>
+            <icon type="calendar" size="20" color="#4A90E2" />
+          </view>
+        </picker>
+      </view>
+
+      <!-- 当日记录 -->
+      <view class="records-section">
+        <view class="section-header">
+          <text class="section-title">当日记录</text>
+          <text class="records-count">共 {{filteredRecords ? filteredRecords.length : 0}} 条</text>
+        </view>
+
+        <view wx:if="{{filteredRecords && filteredRecords.length > 0}}" class="records-list">
+          <view 
+            wx:for="{{filteredRecords}}" 
+            wx:key="id" 
+            class="record-card"
+          >
+            <view class="record-header">
+              <text class="record-type">{{item.type}}</text>
+              <text class="record-duration">{{formatTime(item.duration)}}</text>
+            </view>
+            <text class="record-time">{{item.date}}</text>
+            <text wx:if="{{item.notes}}" class="record-notes">{{item.notes}}</text>
+          </view>
+        </view>
+
+        <view wx:else class="empty-records">
+          <text class="empty-text">暂无冥想记录</text>
+          <button class="button button-primary button-medium" bindtap="navigateToMeditation">
+            开始冥想
+          </button>
+        </view>
+      </view>
+
+      <!-- 历史统计图表 -->
+      <view class="chart-section">
+        <text class="section-title">历史统计</text>
+        <view class="chart-placeholder">
+          <text class="chart-text">图表功能开发中</text>
+          <text class="chart-description">未来版本将提供详细的统计图表分析</text>
+        </view>
+      </view>
+
+    </scroll-view>
+  </view>
+</view>

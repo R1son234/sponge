@@ -1,0 +1,131 @@
+/* app.wxss - 全局样式 */
+page {
+  background-color: #FAFBFC;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+/* 颜色变量 */
+:root {
+  --primary: #4A90E2;
+  --secondary: #FFB74D;
+  --background: #FAFBFC;
+  --surface: #FFFFFF;
+  --text: #37474F;
+  --text-secondary: #78909C;
+  --border: #E8EAED;
+  --tabbar-active: #4A90E2;
+  --tabbar-inactive: #90A4AE;
+  --success: #66BB6A;
+  --accent: #FFB74D;
+  --light-blue: #F3F8FF;
+}
+
+/* 通用样式类 */
+.container {
+  padding: 32rpx;
+}
+
+.card {
+  background-color: var(--surface);
+  border-radius: 16rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+  padding: 32rpx;
+  margin: 16rpx 0;
+}
+
+.button {
+  border-radius: 50rpx;
+  padding: 24rpx 48rpx;
+  font-weight: 600;
+  text-align: center;
+  min-height: 88rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button-primary {
+  background-color: var(--primary);
+  color: var(--surface);
+}
+
+.button-secondary {
+  background-color: var(--secondary);
+  color: var(--surface);
+}
+
+.button-outline {
+  background-color: transparent;
+  border: 2rpx solid var(--primary);
+  color: var(--primary);
+}
+
+.button-small {
+  padding: 16rpx 32rpx;
+  min-height: 72rpx;
+  font-size: 28rpx;
+}
+
+.button-medium {
+  padding: 24rpx 48rpx;
+  min-height: 88rpx;
+  font-size: 32rpx;
+}
+
+.button-large {
+  padding: 32rpx 64rpx;
+  min-height: 104rpx;
+  font-size: 36rpx;
+}
+
+.text-primary {
+  color: var(--text);
+  font-size: 32rpx;
+}
+
+.text-secondary {
+  color: var(--text-secondary);
+  font-size: 28rpx;
+}
+
+.text-small {
+  font-size: 24rpx;
+}
+
+.text-medium {
+  font-size: 28rpx;
+}
+
+.text-large {
+  font-size: 36rpx;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.space-y-16 > view:not(:last-child) {
+  margin-bottom: 16rpx;
+}
+
+.space-y-32 > view:not(:last-child) {
+  margin-bottom: 32rpx;
+}

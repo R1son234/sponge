@@ -1,0 +1,201 @@
+/* pages/home/home.wxss */
+.container {
+  height: 100vh;
+  background-color: var(--background);
+}
+
+.scroll-container {
+  height: 100%;
+}
+
+.loading-container,
+.error-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 64rpx;
+}
+
+.loading-text {
+  font-size: 32rpx;
+  color: var(--text-secondary);
+}
+
+.error-text {
+  font-size: 32rpx;
+  color: var(--text);
+  margin-bottom: 32rpx;
+  text-align: center;
+}
+
+/* 欢迎区域 */
+.welcome-section {
+  padding: 48rpx;
+  align-items: center;
+  margin-bottom: 16rpx;
+}
+
+.welcome-title {
+  font-size: 56rpx;
+  font-weight: bold;
+  color: var(--text);
+  text-align: center;
+  margin-bottom: 16rpx;
+}
+
+.welcome-subtitle {
+  font-size: 32rpx;
+  color: var(--text-secondary);
+  text-align: center;
+  line-height: 44rpx;
+}
+
+/* 统计卡片 */
+.stats-card {
+  margin: 32rpx;
+  align-self: stretch;
+}
+
+.stats-header {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32rpx;
+}
+
+.stats-title {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.view-more-text {
+  font-size: 28rpx;
+  color: var(--primary);
+  font-weight: 500;
+}
+
+.stats-row {
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.stat-item {
+  align-items: center;
+}
+
+.stat-value {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: var(--primary);
+}
+
+.stat-label {
+  font-size: 24rpx;
+  color: var(--text-secondary);
+  margin-top: 8rpx;
+}
+
+/* 区域样式 */
+.section {
+  padding: 32rpx;
+}
+
+.section-title {
+  font-size: 40rpx;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 16rpx;
+}
+
+.section-subtitle {
+  font-size: 28rpx;
+  color: var(--text-secondary);
+  margin-bottom: 32rpx;
+}
+
+/* 快速开始网格 */
+.quick-start-grid {
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.quick-start-card {
+  flex: 1;
+  background-color: var(--surface);
+  border-radius: 32rpx;
+  padding: 32rpx;
+  margin: 0 8rpx;
+  align-items: center;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.1);
+}
+
+.quick-start-icon {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 60rpx;
+  background-color: var(--light-blue);
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 24rpx;
+}
+
+.quick-start-name {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: var(--text);
+  text-align: center;
+  margin-bottom: 8rpx;
+}
+
+.quick-start-duration {
+  font-size: 24rpx;
+  color: var(--text-secondary);
+}
+
+/* 指南卡片 */
+.guide-card {
+  align-self: stretch;
+}
+
+.guide-header {
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 24rpx;
+}
+
+.guide-title {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: var(--text);
+  margin-left: 16rpx;
+}
+
+.guide-description {
+  font-size: 28rpx;
+  color: var(--text-secondary);
+  line-height: 40rpx;
+  margin-bottom: 32rpx;
+}
+
+/* 响应式适配 */
+@media (max-width: 768px) {
+  .quick-start-grid {
+    flex-direction: column;
+  }
+  
+  .quick-start-card {
+    margin: 8rpx 0;
+  }
+  
+  .stats-row {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .stat-item {
+    margin: 16rpx 0;
+  }
+}

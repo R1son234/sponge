@@ -1,0 +1,86 @@
+<!-- pages/meditation/meditation.wxml -->
+<view class="container">
+  <!-- 加载状态 -->
+  <view wx:if="{{loading}}" class="loading-container">
+    <text class="loading-text">加载中...</text>
+  </view>
+
+  <!-- 错误状态 -->
+  <view wx:if="{{error}}" class="error-container">
+    <text class="error-text">{{error}}</text>
+    <button class="button button-primary button-small" bindtap="retry">重试</button>
+  </view>
+
+  <!-- 快速开始引导 -->
+  <view wx:if="{{!loading && !error && quickStartData && !currentSession}}" class="quick-start-guide">
+    <view class="guide-card">
+      <text class="guide-title">快速开始 - {{quickStartData.name}}</text>
+      <text class="guide-duration">{{quickStartData.duration}}分钟</text>
+      <text class="guide-description">{{quickStartData.description}}</text>
+      <button class="button button-primary button-large" bindtap="handleQuickStart">
+        开始冥想
+      </button>
+    </view>
+  </view>
+
+  <!-- 冥想类型选择 -->
+  <view wx:if="{{!loading && !error && !quickStartData && !currentSession}}" class="types-container">
+    <text class="section-title">选择冥想类型</text>
+    <scroll-view scroll-y="true" class="types-scroll">
+      <view 
+        wx:for="{{meditationTypes}}" 
+        wx:key="id" 
+        class="type-card" 
+        bindtap="startMeditation" 
+        data-type="{{item.name}}"
+      >
+        <view class="type-icon">
+          <icon type="headset" size="32" color="#4A90E2" />
+        </view>
+        <text class="type-name">{{item.name}}</text>
+        <text class="type-description">{{item.description}}</text>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 冥想进行中 -->
+  <view wx:if="{{currentSession}}" class="meditation-session">
+    <view class="timer-display">
+      <text class="timer-text">{{formatTime(elapsedTime)}}</text>
+      <text class="session-type">{{currentSession.type}}</text>
+    </view>
+
+    <view class="control-buttons">
+      <button 
+        wx:if="{{!isRecording}}" 
+        class="button button-primary button-large" 
+        bindtap="resumeMeditation"
+      >
+        继续
+      </button>
+      <button 
+        wx:if="{{isRecording}}" 
+        class="button button-secondary button-large" 
+        bindtap="pauseMeditation"
+      >
+        暂停
+      </button>
+      <button 
+        class="button button-outline button-medium" 
+        bindtap="stopMeditation"
+      >
+        结束
+      </button>
+    </view>
+
+    <view class="session-info">
+      <text>冥想类型: {{currentSession.type}}</text>
+      <text>开始时间: {{formatDate(currentSession.startTime)}}</text>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view wx:if="{{!loading && !error && !quickStartData && !currentSession && meditationTypes.length === 0}}" class="empty-state">
+    <text class="empty-text">暂无冥想类型</text>
+  </view>
+</view>

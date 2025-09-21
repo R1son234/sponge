@@ -1,0 +1,114 @@
+/* pages/login/login.wxss */
+.login-container {
+  padding: 40rpx;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 60rpx;
+}
+
+.logo {
+  width: 120rpx;
+  height: 120rpx;
+  margin-bottom: 20rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.title {
+  display: block;
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 10rpx;
+}
+
+.subtitle {
+  display: block;
+  font-size: 28rpx;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.form-container {
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 40rpx;
+  box-shadow: 0 10rpx 30rpx rgba(0, 0, 0, 0.1);
+}
+
+.type-switch {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 40rpx;
+}
+
+.type-item {
+  font-size: 32rpx;
+  color: #999;
+  padding: 0 20rpx;
+  transition: color 0.3s;
+}
+
+.type-item.active {
+  color: #4a90e2;
+  font-weight: bold;
+}
+
+.type-separator {
+  color: #ddd;
+}
+
+.error-message {
+  background: #fee;
+  color: #c33;
+  padding: 20rpx;
+  border-radius: 10rpx;
+  margin-bottom: 30rpx;
+  font-size: 26rpx;
+  text-align: center;
+}
+
+.input-group {
+  margin-bottom: 30rpx;
+}
+
+.input {
+  border: 2rpx solid #eee;
+  border-radius: 12rpx;
+  padding: 24rpx;
+  font-size: 28rpx;
+  transition: border-color 0.3s;
+}
+
+.input:focus {
+  border-color: #4a90e2;
+}
+
+.submit-btn {
+  background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+  border: none;
+  border-radius: 12rpx;
+  padding: 24rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+  margin-top: 20rpx;
+}
+
+.submit-btn:active {
+  opacity: 0.9;
+}
+
+.quick-login {
+  text-align: center;
+  margin-top: 30rpx;
+}
+
+.quick-login-text {
+  color: #4a90e2;
+  font-size: 26rpx;
+  text-decoration: underline;
+}

@@ -1,0 +1,103 @@
+<!-- pages/profile/profile.wxml -->
+<view class="container">
+  <!-- 未登录状态 -->
+  <view wx:if="{{!isLoggedIn}}" class="login-prompt">
+    <view class="login-card">
+      <text class="login-title">欢迎使用冥想助手</text>
+      <text class="login-subtitle">登录后可以同步您的冥想数据</text>
+      <button class="button button-primary button-large" bindtap="handleLogin">
+        微信登录
+      </button>
+    </view>
+  </view>
+
+  <!-- 登录状态 -->
+  <view wx:else>
+    <!-- 加载状态 -->
+    <view wx:if="{{loading}}" class="loading-container">
+      <text class="loading-text">加载中...</text>
+    </view>
+
+    <!-- 错误状态 -->
+    <view wx:if="{{error}}" class="error-container">
+      <text class="error-text">{{error}}</text>
+      <button class="button button-primary button-small" bindtap="retry">重试</button>
+    </view>
+
+    <!-- 正常内容 -->
+    <view wx:if="{{!loading && !error}}" class="profile-content">
+      <scroll-view scroll-y="true" class="scroll-container" enhanced="{{true}}" show-scrollbar="{{false}}">
+        
+        <!-- 用户信息卡片 -->
+        <view class="user-card">
+          <image class="user-avatar" src="{{userInfo.avatar || '/assets/default-avatar.png'}}" />
+          <view class="user-info">
+            <text class="user-name">{{userInfo.username || '冥想用户'}}</text>
+            <text class="user-email">{{userInfo.email || '完善您的个人信息'}}</text>
+          </view>
+          <button class="edit-button" bindtap="editProfile">
+            <icon type="edit" size="20" color="#4A90E2" />
+          </button>
+        </view>
+
+        <!-- 统计信息 -->
+        <view class="stats-section">
+          <text class="section-title">我的统计</text>
+          
+          <view class="stats-grid">
+            <view class="stat-item">
+              <text class="stat-value">{{stats.consecutiveDays || 0}}</text>
+              <text class="stat-label">连续天数</text>
+            </view>
+            <view class="stat-item">
+              <text class="stat-value">{{stats.totalSessions || 0}}</text>
+              <text class="stat-label">冥想次数</text>
+            </view>
+            <view class="stat-item">
+              <text class="stat-value">{{formatTime(stats.totalTime || 0)}}</text>
+              <text class="stat-label">总时长</text>
+            </view>
+          </view>
+        </view>
+
+        <!-- 功能菜单 -->
+        <view class="menu-section">
+          <text class="section-title">功能设置</text>
+          
+          <view class="menu-list">
+            <view class="menu-item" bindtap="viewSettings">
+              <view class="menu-left">
+                <icon type="setting" size="24" color="#4A90E2" />
+                <text class="menu-text">设置</text>
+              </view>
+              <icon type="right" size="16" color="#78909C" />
+            </view>
+            
+            <view class="menu-item" bindtap="viewHelp">
+              <view class="menu-left">
+                <icon type="help" size="24" color="#4A90E2" />
+                <text class="menu-text">帮助与反馈</text>
+              </view>
+              <icon type="right" size="16" color="#78909C" />
+            </view>
+            
+            <view class="menu-item" bindtap="handleLogout">
+              <view class="menu-left">
+                <icon type="logout" size="24" color="#FF6B6B" />
+                <text class="menu-text logout-text">退出登录</text>
+              </view>
+              <icon type="right" size="16" color="#78909C" />
+            </view>
+          </view>
+        </view>
+
+        <!-- 应用信息 -->
+        <view class="app-info">
+          <text class="app-version">版本 1.0.0</text>
+          <text class="app-copyright">© 2024 冥想助手</text>
+        </view>
+
+      </scroll-view>
+    </view>
+  </view>
+</view>

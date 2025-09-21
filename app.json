@@ -1,0 +1,61 @@
+{
+  "pages": [
+    "pages/home/home",
+    "pages/meditation/meditation",
+    "pages/checkin/checkin",
+    "pages/friends/friends",
+    "pages/profile/profile"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#FAFBFC",
+    "navigationBarTitleText": "冥想助手",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#FAFBFC",
+    "enablePullDownRefresh": false
+  },
+  "tabBar": {
+    "color": "#90A4AE",
+    "selectedColor": "#4A90E2",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/home/home",
+        "text": "首页",
+        "iconPath": "assets/tabbar/home.png",
+        "selectedIconPath": "assets/tabbar/home-active.png"
+      },
+      {
+        "pagePath": "pages/meditation/meditation",
+        "text": "冥想",
+        "iconPath": "assets/tabbar/meditation.png",
+        "selectedIconPath": "assets/tabbar/meditation-active.png"
+      },
+      {
+        "pagePath": "pages/checkin/checkin",
+        "text": "打卡",
+        "iconPath": "assets/tabbar/checkin.png",
+        "selectedIconPath": "assets/tabbar/checkin-active.png"
+      },
+      {
+        "pagePath": "pages/friends/friends",
+        "text": "好友",
+        "iconPath": "assets/tabbar/friends.png",
+        "selectedIconPath": "assets/tabbar/friends-active.png"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的",
+        "iconPath": "assets/tabbar/profile.png",
+        "selectedIconPath": "assets/tabbar/profile-active.png"
+      }
+    ]
+  },
+  "networkTimeout": {
+    "request": 10000,
+    "downloadFile": 10000
+  },
+  "debug": false,
+  "style": "v2"
+}

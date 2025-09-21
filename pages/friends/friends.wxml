@@ -1,0 +1,102 @@
+<!-- pages/friends/friends.wxml -->
+<view class="container">
+  <!-- 加载状态 -->
+  <view wx:if="{{loading}}" class="loading-container">
+    <text class="loading-text">加载中...</text>
+  </view>
+
+  <!-- 错误状态 -->
+  <view wx:if="{{error}}" class="error-container">
+    <text class="error-text">{{error}}</text>
+    <button class="button button-primary button-small" bindtap="retry">重试</button>
+  </view>
+
+  <!-- 正常内容 -->
+  <view wx:if="{{!loading && !error}}">
+    <!-- 标签页切换 -->
+    <view class="tabs">
+      <view 
+        class="tab {{activeTab === 'friends' ? 'tab-active' : ''}}" 
+        bindtap="switchTab" 
+        data-tab="friends"
+      >
+        <text>好友列表</text>
+      </view>
+      <view 
+        class="tab {{activeTab === 'activities' ? 'tab-active' : ''}}" 
+        bindtap="switchTab" 
+        data-tab="activities"
+      >
+        <text>好友动态</text>
+      </view>
+    </view>
+
+    <!-- 好友列表 -->
+    <view wx:if="{{activeTab === 'friends'}}" class="tab-content">
+      <view class="section-header">
+        <text class="section-title">我的好友</text>
+        <text class="friends-count">共 {{friends.length}} 位好友</text>
+      </view>
+
+      <view wx:if="{{friends.length > 0}}" class="friends-list">
+        <view 
+          wx:for="{{friends}}" 
+          wx:key="id" 
+          class="friend-card"
+          bindtap="viewFriendDetail"
+          data-id="{{item.id}}"
+        >
+          <image class="friend-avatar" src="{{item.avatar || '/assets/default-avatar.png'}}" />
+          <view class="friend-info">
+            <text class="friend-name">{{item.username}}</text>
+            <text class="friend-status">最近活跃: {{formatTime(item.lastActive)}}</text>
+          </view>
+          <icon type="right" size="16" color="#78909C" />
+        </view>
+      </view>
+
+      <view wx:else class="empty-state">
+        <text class="empty-text">暂无好友</text>
+        <button class="button button-primary button-medium" bindtap="addFriend">
+          添加好友
+        </button>
+      </view>
+    </view>
+
+    <!-- 好友动态 -->
+    <view wx:if="{{activeTab === 'activities'}}" class="tab-content">
+      <view class="section-header">
+        <text class="section-title">好友动态</text>
+        <text class="activities-count">共 {{activities.length}} 条动态</text>
+      </view>
+
+      <view wx:if="{{activities.length > 0}}" class="activities-list">
+        <view 
+          wx:for="{{activities}}" 
+          wx:key="id" 
+          class="activity-card"
+        >
+          <view class="activity-header">
+            <image class="activity-avatar" src="{{item.user.avatar || '/assets/default-avatar.png'}}" />
+            <view class="activity-user">
+              <text class="user-name">{{item.user.username}}</text>
+              <text class="activity-time">{{formatTime(item.date)}}</text>
+            </view>
+          </view>
+          
+          <view class="activity-content">
+            <text class="activity-type">完成了 {{item.type}} 冥想</text>
+            <text class="activity-duration">时长: {{item.duration}} 分钟</text>
+          </view>
+          
+          <text wx:if="{{item.notes}}" class="activity-notes">"{{item.notes}}"</text>
+        </view>
+      </view>
+
+      <view wx:else class="empty-state">
+        <text class="empty-text">暂无好友动态</text>
+        <text class="empty-subtext">好友的冥想动态将显示在这里</text>
+      </view>
+    </view>
+  </view>
+</view>
