@@ -32,6 +32,12 @@ Page({
   },
 
   onUnload() {
+    if (this.data.timer) {
+      clearInterval(this.data.timer);
+    }
+    if (this.data.timer) {
+      clearInterval(this.data.timer);
+    }
     // 清理定时器
     if (this.data.timer) {
       clearInterval(this.data.timer);

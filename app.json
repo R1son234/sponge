@@ -58,7 +58,7 @@
   },
   "debug": false,
   "permission": {
-    "scope.userInfo": {
+    "scope.userProfile": {
       "desc": "用于获取用户信息"
     }
   },

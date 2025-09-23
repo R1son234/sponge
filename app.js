@@ -25,8 +25,12 @@ App({
     // 可以在这里添加错误上报逻辑
   },
   
-  // 初始化全局数据
+  // 初始化全局数据（含云开发配置）
   initGlobalData() {
+    wx.cloud.init({
+      env: 'your-env-id', // 替换为实际云开发环境ID
+      traceUser: true,
+    });
     this.globalData = {
       isLoggedIn: false,
       userInfo: null,
