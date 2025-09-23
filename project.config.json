@@ -1,5 +1,6 @@
 {
   "setting": {
+    "cloudfunctionRoot": "cloudfunctions/",
     "es6": true,
     "postcss": true,
     "minified": true,

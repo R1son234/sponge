@@ -57,5 +57,10 @@
     "downloadFile": 10000
   },
   "debug": false,
+  "permission": {
+    "scope.userInfo": {
+      "desc": "用于获取用户信息"
+    }
+  },
   "style": "v2"
 }
