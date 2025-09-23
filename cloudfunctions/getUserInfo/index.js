@@ -1,7 +1,5 @@
-import cloud from 'wx-server-sdk'
-cloud.init({
-  env: cloud.DYNAMIC_CURRENT_ENV
-})
+const cloud = require('wx-server-sdk')
+cloud.init()
 const db = cloud.database()
 
 exports.main = async () => {
