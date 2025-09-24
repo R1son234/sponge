@@ -11,6 +11,35 @@ const getDB = () => {
 };
 
 /**
+ * 统一的HTTP请求方法
+ * @param {string} url - 请求URL
+ * @param {object} options - 请求选项
+ * @returns {Promise} Promise对象
+ */
+const request = (url, options = {}) => {
+  return new Promise((resolve, reject) => {
+    wx.request({
+      url: url,
+      method: options.method || 'GET',
+      data: options.data || {},
+      header: options.header || {
+        'content-type': 'application/json'
+      },
+      success: (res) => {
+        if (res.statusCode >= 200 && res.statusCode < 300) {
+          resolve(res.data);
+        } else {
+          reject(new Error(`HTTP ${res.statusCode}: ${res.data}`));
+        }
+      },
+      fail: (error) => {
+        reject(error);
+      }
+    });
+  });
+};
+
+/**
  * 统一的数据库查询方法
  * @param {string} collection - 集合名称
  * @param {object} condition - 查询条件
