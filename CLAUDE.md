@@ -100,3 +100,8 @@
 - 避免在代码中硬编码敏感信息
 - 定期更新依赖包版本
 - 实施安全扫描
+
+## 8. 其他规范
+- 参考代码项目：https://github.com/wechat-miniprogram/miniprogram-demo
+- 参考微信小程序开发文档：https://developers.weixin.qq.com/miniprogram/dev/framework/
+- 参考微信云开发文档：https://developers.weixin.qq.com/miniprogram/dev/wxcloud/basis/getting-started.html

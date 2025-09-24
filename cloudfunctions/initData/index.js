@@ -5,6 +5,35 @@ cloud.init({
 })
 const db = cloud.database()
 
+// 云函数入口
+exports.main = async (event, context) => {
+  const { action } = event;
+
+  try {
+    switch (action) {
+      case 'initMeditationTypes':
+        return await initMeditationTypes();
+      case 'initDemoUser':
+        return await initDemoUser();
+      case 'initAll':
+        const [result1, result2] = await Promise.all([
+          initMeditationTypes(),
+          initDemoUser()
+        ]);
+        return {
+          success: result1.success && result2.success,
+          meditationTypes: result1,
+          demoUser: result2
+        };
+      default:
+        return { success: false, message: '未知操作' };
+    }
+  } catch (error) {
+    console.error('初始化数据失败:', error);
+    return { success: false, message: '初始化数据失败' };
+  }
+};
+
 /**
  * 初始化冥想类型数据
  */
@@ -12,7 +41,7 @@ const initMeditationTypes = async () => {
   try {
     // 检查是否已有数据
     const existingTypes = await db.collection('meditation_types').count();
-    
+
     if (existingTypes.total === 0) {
       const types = [
         {
@@ -61,7 +90,7 @@ const initMeditationTypes = async () => {
           }
         });
       }
-      
+
       return { success: true, message: '冥想类型数据初始化完成' };
     }
     return { success: true, message: '冥想类型数据已存在' };
@@ -80,7 +109,7 @@ const initDemoUser = async () => {
     const existingUsers = await db.collection('users').where({
       username: 'demo'
     }).count();
-    
+
     if (existingUsers.total === 0) {
       await db.collection('users').add({
         data: {
@@ -92,41 +121,12 @@ const initDemoUser = async () => {
           updateTime: db.serverDate()
         }
       });
-      
+
       return { success: true, message: '演示用户数据初始化完成' };
     }
     return { success: true, message: '演示用户数据已存在' };
   } catch (error) {
     console.error('初始化演示用户数据失败:', error);
     return { success: false, message: '初始化演示用户数据失败' };
-  }
-};
-
-// 云函数入口
-exports.main = async (event, context) => {
-  const { action } = event;
-  
-  try {
-    switch (action) {
-      case 'initMeditationTypes':
-        return await initMeditationTypes();
-      case 'initDemoUser':
-        return await initDemoUser();
-      case 'initAll':
-        const [result1, result2] = await Promise.all([
-          initMeditationTypes(),
-          initDemoUser()
-        ]);
-        return {
-          success: result1.success && result2.success,
-          meditationTypes: result1,
-          demoUser: result2
-        };
-      default:
-        return { success: false, message: '未知操作' };
-    }
-  } catch (error) {
-    console.error('初始化数据失败:', error);
-    return { success: false, message: '初始化数据失败' };
   }
 };

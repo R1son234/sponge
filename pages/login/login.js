@@ -4,9 +4,8 @@ const app = getApp();
 
 Page({
   data: {
-  username: '',
-  password: '',
-}
+    username: '',
+    password: '',
     loginType: 'login', // login 或 register
     formData: {
       username: '',
@@ -40,7 +39,7 @@ Page({
   onInputChange(e) {
     const { field } = e.currentTarget.dataset;
     const value = e.detail.value;
-    
+
     this.setData({
       [`formData.${field}`]: value,
       error: null
@@ -65,9 +64,9 @@ Page({
         await this.handleRegister();
       }
     } catch (error) {
-      this.setData({ 
+      this.setData({
         error: error.message,
-        loading: false 
+        loading: false
       });
     }
   },
@@ -118,7 +117,7 @@ Page({
 
     try {
       const result = await authService.login({ username, password });
-      
+
       if (result.success) {
         wx.showToast({
           title: '登录成功',
