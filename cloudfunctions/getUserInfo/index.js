@@ -1,15 +1,14 @@
 const cloud = require('wx-server-sdk')
-cloud.init()
 const db = cloud.database()
 
-exports.main = async () => {
+exports.main = async (event) => {
   const { OPENID } = cloud.getWXContext()
   try {
     const user = await db.collection('users').where({ _openid: OPENID }).get()
     if (user.data.length === 0) {
       return {
         code: 404,
-        message: '用户不存在'
+        msg: '用户不存在'
       }
     }
     return {
@@ -17,10 +16,10 @@ exports.main = async () => {
       data: user.data[0]
     }
   } catch (err) {
-    console.error('获取用户信息失败:', err.message)
+    console.error('获取用户信息失败:', err)
     return {
       code: 500,
-      message: '服务器错误'
+      msg: '服务器错误'
     }
   }
 }

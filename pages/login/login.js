@@ -4,6 +4,9 @@ const app = getApp();
 
 Page({
   data: {
+  username: '',
+  password: '',
+}
     loginType: 'login', // login 或 register
     formData: {
       username: '',

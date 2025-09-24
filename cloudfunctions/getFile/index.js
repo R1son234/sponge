@@ -1,15 +1,15 @@
 // 获取文件云函数（支持图片/音频访问）
 const cloud = require('wx-server-sdk')
-cloud.init()
+cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV })
 const db = cloud.database()
 
 exports.main = async (event) => {
   const wxContext = cloud.getWXContext()
   const user_id = wxContext.OPENID
-  const { fileID } = event
+  const { file_id } = event
 
   // 1. 校验文件存在性
-  const file = await db.collection('files').where({ file_id: fileID }).get()
+  const file = await db.collection('files').where({ file_id: file_id }).get()
   if (file.data.length === 0) {
     return { code: -1, msg: '文件不存在' }
   }

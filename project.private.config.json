@@ -1,6 +1,6 @@
 {
-  "libVersion": "3.10.1",
-  "projectname": "%E6%B5%B7%E7%BB%B5%E5%86%A5%E6%83%B3",
+  "libVersion": "2.31.0",
+  "projectname": "%25E6%25B5%25B7%25E7%25BB%25B5%25E5%2586%25A5%25E6%2583%25B3",
   "setting": {
     "urlCheck": true,
     "coverView": true,
