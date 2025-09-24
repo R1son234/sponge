@@ -10,6 +10,11 @@ App({
     
     // 检查登录状态并尝试自动登录
     this.checkLoginStatus();
+    
+    // 初始化数据（开发环境使用）
+    if (wx.getSystemInfoSync().platform === 'devtools') {
+      this.initDevelopmentData();
+    }
   },
   
   onShow() {
@@ -28,13 +33,13 @@ App({
   // 初始化全局数据（含云开发配置）
   initGlobalData() {
     wx.cloud.init({
-      env: 'your-env-id', // 替换为实际云开发环境ID
+      env: 'cloud1-5g954c7x8a550d0d', // 云开发环境ID
       traceUser: true,
     });
     this.globalData = {
       isLoggedIn: false,
       userInfo: null,
-      baseURL: 'https://your-api-domain.com', // 需要替换为实际API地址
+      baseURL: 'https://api.example.com', // API地址（演示用）
       // 事件总线用于页面间通信
       eventBus: {
         events: {},
@@ -106,5 +111,22 @@ App({
       return false;
     }
     return true;
+  },
+  
+  // 开发环境数据初始化
+  async initDevelopmentData() {
+    try {
+      // 调用云函数初始化数据
+      const result = await wx.cloud.callFunction({
+        name: 'initData',
+        data: {
+          action: 'initAll'
+        }
+      });
+      
+      console.log('开发环境数据初始化完成:', result);
+    } catch (error) {
+      console.warn('开发环境数据初始化失败:', error);
+    }
   }
 });

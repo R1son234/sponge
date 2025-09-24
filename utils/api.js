@@ -1,32 +1,99 @@
-// utils/api.js - 网络请求工具函数
-const app = getApp();
+// utils/api.js - 云开发数据库操作工具函数
+// 注意：调用此文件中的函数前，必须确保已经调用 wx.cloud.init()
+let db = null;
+
+// 延迟初始化数据库连接
+const getDB = () => {
+  if (!db) {
+    db = wx.cloud.database();
+  }
+  return db;
+};
 
 /**
- * 统一的网络请求方法
- * @param {string} url - 请求URL
- * @param {object} options - 请求选项
+ * 统一的数据库查询方法
+ * @param {string} collection - 集合名称
+ * @param {object} condition - 查询条件
  * @returns {Promise} Promise对象
  */
-const request = (url, options = {}) => {
-  const { method = 'GET', data = {}, header = {} } = options;
-  
+const query = (collection, condition = {}) => {
   return new Promise((resolve, reject) => {
-    wx.request({
-      url: `${app.globalData.baseURL}${url}`,
-      method,
-      data,
-      header: {
-        'Content-Type': 'application/json',
-        ...header
-      },
+    getDB().collection(collection).where(condition).get({
       success: (res) => {
-        if (res.statusCode >= 200 && res.statusCode < 300) {
-          resolve(res.data);
-        } else {
-          reject(new Error(res.data?.message || '请求失败'));
-        }
+        resolve(res.data);
       },
       fail: (error) => {
+        console.error('数据库查询失败:', error);
+        reject(error);
+      }
+    });
+  });
+};
+
+/**
+ * 添加数据
+ * @param {string} collection - 集合名称
+ * @param {object} data - 要添加的数据
+ * @returns {Promise} Promise对象
+ */
+const add = (collection, data) => {
+  return new Promise((resolve, reject) => {
+    getDB().collection(collection).add({
+      data: {
+        ...data,
+        createTime: getDB().serverDate(),
+        updateTime: getDB().serverDate()
+      },
+      success: (res) => {
+        resolve(res);
+      },
+      fail: (error) => {
+        console.error('数据库添加失败:', error);
+        reject(error);
+      }
+    });
+  });
+};
+
+/**
+ * 更新数据
+ * @param {string} collection - 集合名称
+ * @param {string} id - 文档ID
+ * @param {object} data - 要更新的数据
+ * @returns {Promise} Promise对象
+ */
+const update = (collection, id, data) => {
+  return new Promise((resolve, reject) => {
+    getDB().collection(collection).doc(id).update({
+      data: {
+        ...data,
+        updateTime: getDB().serverDate()
+      },
+      success: (res) => {
+        resolve(res);
+      },
+      fail: (error) => {
+        console.error('数据库更新失败:', error);
+        reject(error);
+      }
+    });
+  });
+};
+
+/**
+ * 删除数据
+ * @param {string} collection - 集合名称
+ * @param {string} id - 文档ID
+ * @returns {Promise} Promise对象
+ */
+const remove = (collection, id) => {
+  return new Promise((resolve, reject) => {
+    getDB().collection(collection).doc(id).remove({
+      success: (res) => {
+        resolve(res);
+      },
+      fail: (error) => {
+        console.error('数据库删除失败:', error);
         reject(error);
       }
     });
@@ -76,37 +143,68 @@ const del = (url, data = {}) => {
 // 冥想相关API
 const meditationAPI = {
   // 获取冥想类型
-  getTypes: () => get('/api/meditation/types'),
+  getTypes: () => query('meditation_types'),
   
   // 获取冥想记录
-  getRecords: (userId) => get(`/api/meditation/records/${userId}`),
+  getRecords: (userId) => query('meditation_records', { userId }),
   
   // 获取冥想统计
-  getStats: (userId) => get(`/api/meditation/stats/${userId}`),
+  getStats: (userId) => {
+    return new Promise((resolve, reject) => {
+      query('meditation_records', { userId }).then(records => {
+        const totalDuration = records.reduce((sum, record) => sum + (record.duration || 0), 0);
+        const totalSessions = records.length;
+        
+        // 计算连续天数（简化版）
+        const dates = records.map(r => new Date(r.createTime).toDateString());
+        const uniqueDates = [...new Set(dates)];
+        const streak = uniqueDates.length;
+        
+        resolve({
+          totalDuration,
+          totalSessions,
+          streak,
+          lastMeditation: records[0] ? new Date(records[0].createTime) : null
+        });
+      }).catch(reject);
+    });
+  },
   
   // 记录冥想
-  record: (data) => post('/api/meditation/record', data)
+  record: (data) => add('meditation_records', data)
 };
 
 // 用户相关API
 const userAPI = {
   // 获取用户信息
-  getUser: (userId) => get(`/api/user/${userId}`),
+  getUser: (userId) => query('users', { _id: userId }).then(users => users[0]),
   
   // 创建用户
-  createUser: (data) => post('/api/user', data)
+  createUser: (data) => add('users', data)
 };
 
 // 好友相关API
 const friendsAPI = {
   // 获取好友列表
-  getFriends: (userId) => get(`/api/friends/${userId}`),
+  getFriends: (userId) => query('friendships', { userId, status: 'accepted' }),
   
   // 获取好友动态
-  getActivities: (userId) => get(`/api/friends/activities/${userId}`),
+  getActivities: (userId) => {
+    return query('friendships', { userId, status: 'accepted' }).then(friendships => {
+      const friendIds = friendships.map(f => f.friendId);
+      return query('meditation_records', { 
+        userId: getDB().command.in(friendIds) 
+      }).then(records => {
+        return records.map(record => ({
+          ...record,
+          type: 'meditation'
+        }));
+      });
+    });
+  },
   
   // 发送好友请求
-  sendRequest: (data) => post('/api/friends/request', data)
+  sendRequest: (data) => add('friend_requests', data)
 };
 
 module.exports = {

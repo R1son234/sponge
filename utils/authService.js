@@ -1,4 +1,5 @@
 // utils/authService.js - 用户认证服务
+// 注意：调用此文件中的函数前，必须确保已经调用 wx.cloud.init()
 const api = require('./api');
 const sessionManager = require('./sessionManager');
 const cryptoUtils = require('./cryptoUtils');
@@ -53,6 +54,11 @@ class AuthService {
    */
   async login(credentials) {
     try {
+      // 检查云开发是否已初始化
+      if (!wx.cloud || !wx.cloud.database) {
+        throw new Error('云开发未初始化，请稍后重试');
+      }
+      
       // 这里应该调用后端登录接口
       // 模拟登录过程
       const loginData = {
