@@ -53,7 +53,13 @@ const query = (collection, condition = {}) => {
       },
       fail: (error) => {
         console.error('数据库查询失败:', error);
-        reject(error);
+        // 如果是集合不存在错误，返回空数组而不是拒绝
+        if (error.errCode === -502005) {
+          console.warn(`集合 ${collection} 不存在，返回空数据`);
+          resolve([]);
+        } else {
+          reject(error);
+        }
       }
     });
   });
@@ -78,7 +84,12 @@ const add = (collection, data) => {
       },
       fail: (error) => {
         console.error('数据库添加失败:', error);
-        reject(error);
+        // 如果是集合不存在错误，提示用户需要先创建集合
+        if (error.errCode === -502005) {
+          reject(new Error(`集合 ${collection} 不存在，请先在云开发控制台创建该集合`));
+        } else {
+          reject(error);
+        }
       }
     });
   });
@@ -103,7 +114,12 @@ const update = (collection, id, data) => {
       },
       fail: (error) => {
         console.error('数据库更新失败:', error);
-        reject(error);
+        // 如果是集合不存在错误，提示用户需要先创建集合
+        if (error.errCode === -502005) {
+          reject(new Error(`集合 ${collection} 不存在，请先在云开发控制台创建该集合`));
+        } else {
+          reject(error);
+        }
       }
     });
   });
@@ -123,7 +139,12 @@ const remove = (collection, id) => {
       },
       fail: (error) => {
         console.error('数据库删除失败:', error);
-        reject(error);
+        // 如果是集合不存在错误，提示用户需要先创建集合
+        if (error.errCode === -502005) {
+          reject(new Error(`集合 ${collection} 不存在，请先在云开发控制台创建该集合`));
+        } else {
+          reject(error);
+        }
       }
     });
   });

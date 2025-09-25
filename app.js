@@ -126,7 +126,9 @@ App({
       
       console.log('开发环境数据初始化完成:', result);
     } catch (error) {
-      console.warn('开发环境数据初始化失败:', error);
+      console.warn('开发环境数据初始化失败（不影响正常使用）:', error);
+      // 静默失败，不影响小程序正常启动
+      // 错误可能是云函数未部署或数据库集合不存在
     }
   }
 });
