@@ -30,7 +30,7 @@
         
         <!-- 用户信息卡片 -->
         <view class="user-card">
-          <image class="user-avatar" src="{{userInfo.avatar || '/assets/default-avatar.png'}}" />
+          <image class="user-avatar" src="{{userInfo.avatar || '/assets/tabbar/profile.png'}}" />
           <view class="user-info">
             <text class="user-name">{{userInfo.username || '冥想用户'}}</text>
             <text class="user-email">{{userInfo.email || '完善您的个人信息'}}</text>

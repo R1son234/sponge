@@ -75,7 +75,7 @@ class AuthService {
         username: credentials.username,
         nickname: credentials.username,
         email: `${credentials.username}@example.com`,
-        avatar: '/assets/default-avatar.png'
+        avatar: '/assets/tabbar/profile.png'
       };
 
       const mockToken = 'mock_jwt_token_' + Date.now();

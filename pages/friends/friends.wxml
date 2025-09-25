@@ -46,7 +46,7 @@
           bindtap="viewFriendDetail"
           data-id="{{item.id}}"
         >
-          <image class="friend-avatar" src="{{item.avatar || '/assets/default-avatar.png'}}" />
+          <image class="friend-avatar" src="{{item.avatar || '/assets/tabbar/profile.png'}}" />
           <view class="friend-info">
             <text class="friend-name">{{item.username}}</text>
             <text class="friend-status">最近活跃: {{formatTime(item.lastActive)}}</text>
@@ -77,7 +77,7 @@
           class="activity-card"
         >
           <view class="activity-header">
-            <image class="activity-avatar" src="{{item.user.avatar || '/assets/default-avatar.png'}}" />
+            <image class="activity-avatar" src="{{item.user.avatar || '/assets/tabbar/profile.png'}}" />
             <view class="activity-user">
               <text class="user-name">{{item.user.username}}</text>
               <text class="activity-time">{{formatTime(item.date)}}</text>

@@ -116,7 +116,7 @@ const initDemoUser = async () => {
           username: 'demo',
           nickname: '演示用户',
           email: 'demo@example.com',
-          avatar: '/assets/default-avatar.png',
+          avatar: '/assets/tabbar/profile.png',
           createTime: db.serverDate(),
           updateTime: db.serverDate()
         }
