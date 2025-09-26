@@ -53,8 +53,8 @@ Page({
       ]);
       
       this.setData({ 
-        userInfo,
-        stats,
+        userInfo: userInfo || {},
+        stats: stats || {},
         loading: false 
       });
     } catch (error) {

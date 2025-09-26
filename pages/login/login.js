@@ -170,14 +170,12 @@ Page({
     }
   },
 
-  // 快速访客登录（演示用）
+  // 快速访客登录
   onQuickLogin() {
-    this.setData({
-      formData: {
-        username: 'demo',
-        password: '123456'
-      }
+    wx.showModal({
+      title: '提示',
+      content: '请使用您的账号密码登录',
+      showCancel: false
     });
-    this.onSubmit();
   }
 });

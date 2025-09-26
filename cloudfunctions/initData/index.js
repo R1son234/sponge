@@ -101,32 +101,14 @@ const initMeditationTypes = async () => {
 };
 
 /**
- * 初始化默认用户数据（演示用）
+ * 初始化默认用户数据（可选功能）
  */
 const initDemoUser = async () => {
   try {
-    // 检查是否已有演示用户
-    const existingUsers = await db.collection('users').where({
-      username: 'demo'
-    }).count();
-
-    if (existingUsers.total === 0) {
-      await db.collection('users').add({
-        data: {
-          username: 'demo',
-          nickname: '演示用户',
-          email: 'demo@example.com',
-          avatar: '/assets/tabbar/profile.png',
-          createTime: db.serverDate(),
-          updateTime: db.serverDate()
-        }
-      });
-
-      return { success: true, message: '演示用户数据初始化完成' };
-    }
-    return { success: true, message: '演示用户数据已存在' };
+    // 此功能已禁用，用户需要通过注册流程创建账号
+    return { success: true, message: '用户数据初始化功能已禁用，请通过注册流程创建账号' };
   } catch (error) {
-    console.error('初始化演示用户数据失败:', error);
-    return { success: false, message: '初始化演示用户数据失败' };
+    console.error('初始化用户数据失败:', error);
+    return { success: false, message: '初始化用户数据失败' };
   }
 };

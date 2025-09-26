@@ -66,29 +66,31 @@ class AuthService {
         password: credentials.password
       };
 
-      // 实际项目中应该调用后端API
-      // const result = await api.post('/auth/login', loginData);
+      // 调用云函数进行用户认证
+      const result = await wx.cloud.callFunction({
+        name: 'login',
+        data: {
+          username: credentials.username,
+          password: credentials.password
+        }
+      });
       
-      // 模拟登录成功
-      const mockUser = {
-        _id: '507f1f77bcf86cd799439011',
-        username: credentials.username,
-        nickname: credentials.username,
-        email: `${credentials.username}@example.com`,
-        avatar: '/assets/tabbar/profile.png'
-      };
-
-      const mockToken = 'mock_jwt_token_' + Date.now();
-      
-      // 保存会话
-      sessionManager.saveSession(mockUser, mockToken);
-      this.currentUser = mockUser;
-      
-      return {
-        success: true,
-        user: mockUser,
-        token: mockToken
-      };
+      if (result.result.success) {
+        const user = result.result.user;
+        const token = result.result.token;
+        
+        // 保存会话
+        sessionManager.saveSession(user, token);
+        this.currentUser = user;
+        
+        return {
+          success: true,
+          user: user,
+          token: token
+        };
+      } else {
+        throw new Error(result.result.message || '登录失败');
+      }
     } catch (error) {
       console.error('登录失败:', error);
       throw new Error(error.message || '登录失败，请检查用户名和密码');
@@ -152,15 +154,23 @@ class AuthService {
    */
   async updateUser(userData) {
     try {
-      // 实际项目中应该调用后端API
-      // const result = await api.put('/user/profile', userData);
+      // 调用云函数更新用户信息
+      const result = await wx.cloud.callFunction({
+        name: 'updateUserInfo',
+        data: {
+          userData: userData
+        }
+      });
       
-      // 模拟更新成功
-      const updatedUser = { ...this.currentUser, ...userData };
-      sessionManager.saveSession(updatedUser, sessionManager.getAuthToken());
-      this.currentUser = updatedUser;
-      
-      return { success: true, user: updatedUser };
+      if (result.result.success) {
+        const updatedUser = result.result.user;
+        sessionManager.saveSession(updatedUser, sessionManager.getAuthToken());
+        this.currentUser = updatedUser;
+        
+        return { success: true, user: updatedUser };
+      } else {
+        throw new Error(result.result.message || '更新失败');
+      }
     } catch (error) {
       console.error('更新用户信息失败:', error);
       throw new Error(error.message || '更新失败，请重试');

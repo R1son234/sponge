@@ -12,7 +12,7 @@ App({
     this.checkLoginStatus();
     
     // 初始化数据（开发环境使用）
-    if (wx.getSystemInfoSync().platform === 'devtools') {
+    if (wx.getAppBaseInfo().environment === 'wxdevtools') {
       this.initDevelopmentData();
     }
   },
@@ -39,7 +39,7 @@ App({
     this.globalData = {
       isLoggedIn: false,
       userInfo: null,
-      baseURL: 'https://api.example.com', // API地址（演示用）
+      baseURL: '', // 使用云开发，无需外部API地址
       // 事件总线用于页面间通信
       eventBus: {
         events: {},

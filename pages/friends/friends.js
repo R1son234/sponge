@@ -76,25 +76,45 @@ Page({
     }
 
     try {
-      wx.showLoading({ title: '发送请求中...' });
-      
-      // 获取当前用户ID
-      const currentUser = authService.getCurrentUser();
-      const userId = currentUser._id;
-      
-      // 这里需要实际的用户ID，暂时使用模拟数据
-      await friendsAPI.sendFriendRequest(userId, 'friend_user_id');
-      
-      wx.hideLoading();
-      wx.showToast({
-        title: '好友请求已发送',
-        icon: 'success'
+      // 让用户输入好友的用户名或ID
+      wx.showModal({
+        title: '添加好友',
+        content: '请输入好友的用户名或ID',
+        editable: true,
+        placeholderText: '好友的用户名或ID',
+        success: async (res) => {
+          if (res.confirm && res.content.trim()) {
+            const friendIdentifier = res.content.trim();
+            
+            wx.showLoading({ title: '发送请求中...' });
+            
+            // 获取当前用户ID
+            const currentUser = authService.getCurrentUser();
+            const userId = currentUser._id;
+            
+            try {
+              await friendsAPI.sendFriendRequest(userId, friendIdentifier);
+              
+              wx.hideLoading();
+              wx.showToast({
+                title: '好友请求已发送',
+                icon: 'success'
+              });
+            } catch (error) {
+              wx.hideLoading();
+              console.error('发送好友请求失败:', error);
+              wx.showToast({
+                title: '发送失败',
+                icon: 'error'
+              });
+            }
+          }
+        }
       });
     } catch (error) {
-      wx.hideLoading();
-      console.error('发送好友请求失败:', error);
+      console.error('添加好友失败:', error);
       wx.showToast({
-        title: '发送失败',
+        title: '操作失败',
         icon: 'error'
       });
     }

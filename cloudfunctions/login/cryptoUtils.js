@@ -1,29 +1,22 @@
-// utils/cryptoUtils.js - 密码加密工具
+// cloudfunctions/login/cryptoUtils.js - 密码加密工具（云函数版本）
+const crypto = require('crypto');
+
 /**
  * 生成随机盐值
  * @returns {string} 随机盐值
  */
 const generateSalt = () => {
-  return Math.random().toString(36).substring(2, 15) + 
-         Math.random().toString(36).substring(2, 15);
+  return crypto.randomBytes(16).toString('hex');
 };
 
 /**
- * 密码加密（简化版，实际项目中应使用更安全的加密方式）
+ * 密码加密
  * @param {string} password - 原始密码
  * @param {string} salt - 盐值
  * @returns {string} 加密后的密码
  */
 const encryptPassword = (password, salt) => {
-  // 简化的加密逻辑，实际项目应使用更安全的算法
-  const combined = password + salt;
-  let hash = 0;
-  for (let i = 0; i < combined.length; i++) {
-    const char = combined.charCodeAt(i);
-    hash = ((hash << 5) - hash) + char;
-    hash = hash & hash; // Convert to 32bit integer
-  }
-  return Math.abs(hash).toString(36);
+  return crypto.pbkdf2Sync(password, salt, 1000, 64, 'sha512').toString('hex');
 };
 
 /**
