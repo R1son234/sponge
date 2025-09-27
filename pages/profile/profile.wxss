@@ -186,7 +186,7 @@
 }
 
 .logout-text {
-  color: #FF6B6B;
+  color: var(--text);
 }
 
 /* 应用信息 */

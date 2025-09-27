@@ -9,9 +9,9 @@ Page({
     // 页面数据
     stats: null,
     quickMeditations: [
-      { id: '1', name: '快速放松', duration: 5, icon: 'leaf', description: '适合忙碌生活中的短暂休息，让身心快速恢复平静' },
-      { id: '2', name: '专注呼吸', duration: 10, icon: 'heart', description: '通过专注呼吸，提高注意力，缓解焦虑情绪' },
-      { id: '3', name: '深度冥想', duration: 20, icon: 'moon', description: '深度放松身心，获得内心的宁静与平和' }
+      { id: '1', name: '快速放松', duration: 5, icon: 'success', description: '适合忙碌生活中的短暂休息，让身心快速恢复平静' },
+      { id: '2', name: '专注呼吸', duration: 10, icon: 'love', description: '通过专注呼吸，提高注意力，缓解焦虑情绪' },
+      { id: '3', name: '深度冥想', duration: 20, icon: 'star', description: '深度放松身心，获得内心的宁静与平和' }
     ],
     loading: true,
     error: null
