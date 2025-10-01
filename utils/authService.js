@@ -155,9 +155,15 @@ class AuthService {
    * @returns {string} token字符串
    */
   generateToken(userId) {
-    // 简单的token生成方法，实际项目中应该使用更安全的JWT
+    // 简单的token生成方法，小程序中不能使用Buffer
     const timestamp = Date.now();
-    return Buffer.from(`${userId}:${timestamp}`).toString('base64');
+    // 使用 btoa 替代 Buffer.from，在小程序环境中可用
+    try {
+      return btoa(`${userId}:${timestamp}`);
+    } catch (error) {
+      // 如果 btoa 也不可用，使用简单的字符串拼接
+      return `${userId}_${timestamp}`;
+    }
   }
 
   /**
