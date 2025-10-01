@@ -1,6 +1,6 @@
 {
-  "libVersion": "2.31.0",
-  "projectname": "%25E6%25B5%25B7%25E7%25BB%25B5%25E5%2586%25A5%25E6%2583%25B3",
+  "libVersion": "3.10.2",
+  "projectname": "sponge",
   "setting": {
     "urlCheck": true,
     "coverView": true,

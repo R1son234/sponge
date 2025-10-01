@@ -32,10 +32,15 @@ App({
   
   // 初始化全局数据（含云开发配置）
   initGlobalData() {
-    wx.cloud.init({
-      env: 'cloud1-5g954c7x8a550d0d', // 云开发环境ID
-      traceUser: true,
-    });
+    // 检查云开发是否可用
+    if (wx.cloud) {
+      wx.cloud.init({
+        env: 'cloud1-5g954c7x8a550d0d', // 云开发环境ID
+        traceUser: true,
+      });
+    } else {
+      console.warn('云开发环境不可用，请检查微信开发者工具版本');
+    }
     this.globalData = {
       isLoggedIn: false,
       userInfo: null,

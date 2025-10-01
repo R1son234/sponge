@@ -2,8 +2,8 @@
 <view class="login-container">
   <!-- 头部 -->
   <view class="header">
-    <image class="logo" src="/assets/logo.png" mode="aspectFit"></image>
-    <text class="title">海绵冥想</text>
+    <image class="logo" src="/assets/heart.svg" mode="aspectFit"></image>
+    <text class="title">冥想</text>
     <text class="subtitle">开启你的冥想之旅</text>
   </view>
 

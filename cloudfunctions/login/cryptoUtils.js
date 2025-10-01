@@ -10,13 +10,14 @@ const generateSalt = () => {
 };
 
 /**
- * 密码加密
+ * 密码加密（使用更简单的加密方法确保兼容性）
  * @param {string} password - 原始密码
  * @param {string} salt - 盐值
  * @returns {string} 加密后的密码
  */
 const encryptPassword = (password, salt) => {
-  return crypto.pbkdf2Sync(password, salt, 1000, 64, 'sha512').toString('hex');
+  // 使用更简单的加密方法确保云函数环境兼容性
+  return crypto.createHash('sha256').update(password + salt).digest('hex');
 };
 
 /**

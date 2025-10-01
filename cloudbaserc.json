@@ -1,0 +1,13 @@
+{
+  "envId": "cloud1-5g954c7x8a550d0d",
+  "functionRoot": "cloudfunctions",
+  "functions": [],
+  "ai": {
+    "defaultAgent": "{{env.AI_DEFAULT_AGENT}}",
+    "agents": {
+      "codebuddy": {
+        "type": "none"
+      }
+    }
+  }
+}

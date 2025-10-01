@@ -1,6 +1,6 @@
 {
   "setting": {
-    "cloudfunctionRoot": "cloudfunctions/",
+    "cloudfunctionRoot": "cloudfunctions",
     "es6": true,
     "postcss": true,
     "minified": true,
@@ -32,6 +32,6 @@
   },
   "appid": "wxe4efa8769bea838c",
   "editorSetting": {},
-  "libVersion": "3.10.1",
+  "libVersion": "3.10.2",
   "cloudfunctionTemplateRoot": "cloudfunctionTemplate/"
 }
