@@ -70,85 +70,129 @@
 
 /* 用户信息卡片 */
 .user-card {
+  display: flex;
   background-color: var(--surface);
   border-radius: 24rpx;
   padding: 32rpx;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-start;
   box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.1);
   margin-bottom: 32rpx;
 }
 
-.user-avatar {
+.user-icon {
   width: 120rpx;
   height: 120rpx;
-  border-radius: 60rpx;
   margin-right: 24rpx;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16rpx;
+  background-color: var(--light-blue);
+}
+
+.user-avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 8rpx;
 }
 
 .user-info {
+  display: flex;
   flex: 1;
+  flex-direction: column;
 }
 
 .user-name {
   font-size: 32rpx;
   font-weight: 600;
   color: var(--text);
-  margin-bottom: 8rpx;
+  margin-bottom: 12rpx;
+  display: block;
 }
 
 .user-email {
   font-size: 24rpx;
   color: var(--text-secondary);
+  margin-bottom: 16rpx;
+  display: block;
 }
 
-.edit-button {
-  padding: 16rpx;
-  border-radius: 20rpx;
-  background-color: var(--light-blue);
+.edit-link {
+  font-size: 26rpx;
+  color: var(--primary);
+  font-weight: 500;
+  display: block;
 }
 
 
-/* 菜单区域 */
-.menu-section {
+/* 更多功能区域 */
+.more-functions-section {
   margin-bottom: 32rpx;
 }
 
-.menu-list {
-  background-color: var(--surface);
-  border-radius: 16rpx;
-  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+.more-functions-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 24rpx;
 }
 
-.menu-item {
+.function-card {
+  display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 28rpx 24rpx;
-  border-bottom: 1rpx solid var(--border);
+  background-color: var(--surface);
+  border-radius: 16rpx;
+  padding: 32rpx 24rpx;
+  margin-bottom: 16rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
 }
 
-.menu-item:last-child {
-  border-bottom: none;
+.function-card:last-child {
+  margin-bottom: 0;
 }
 
-.menu-left {
+.function-left {
+  display: flex;
   flex-direction: row;
   align-items: center;
+  flex: 1;
 }
 
-.menu-left icon {
-  margin-right: 16rpx;
+.function-icon {
+  width: 60rpx;
+  height: 60rpx;
+  margin-right: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.menu-text {
+.function-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.function-title {
   font-size: 28rpx;
-  color: var(--text);
   font-weight: 500;
+  color: var(--text);
+  margin-bottom: 4rpx;
 }
 
-.logout-text {
-  color: var(--text);
+.function-subtitle {
+  font-size: 24rpx;
+  color: var(--text-secondary);
+}
+
+.function-arrow {
+  width: 24rpx;
+  height: 24rpx;
+  color: var(--text-secondary);
 }
 
 /* 应用信息 */
@@ -188,13 +232,7 @@
     margin-right: 16rpx;
   }
   
-  .stats-grid {
-    flex-direction: column;
-  }
-  
-  .stat-item {
-    margin-bottom: 16rpx;
-  }
+
   
   .menu-item {
     padding: 24rpx 20rpx;

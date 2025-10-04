@@ -70,23 +70,13 @@
         </view>
       </view>
 
-      <!-- 冥想介绍区域 -->
+      <!-- 冥想指南区域 -->
       <view class="section">
         <text class="section-title">冥想指南</text>
         <view class="card guide-card">
-          <view class="guide-header">
-            <icon type="book" size="24" color="#4A90E2" />
-            <text class="guide-title">新手入门</text>
-          </view>
           <text class="guide-description">
-            冥想是一种古老的修炼方式，通过专注于呼吸、感受或思想，帮助我们达到内心的平静与专注。
+            冥想是一种古老的修炼方式，通过专注于呼吸、感受或思想，帮助我们达到内心的平静与专注。\n
           </text>
-          <button 
-            class="button button-outline button-small" 
-            bindtap="navigateToMeditation"
-          >
-            了解更多
-          </button>
         </view>
       </view>
 

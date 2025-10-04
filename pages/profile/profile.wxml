@@ -30,45 +30,52 @@
         
         <!-- 用户信息卡片 -->
         <view class="user-card">
-          <image class="user-avatar" src="{{userInfo.avatar || '/assets/tabbar/profile.png'}}" />
+          <view class="user-icon">
+            <image class="user-avatar" src="{{userInfo.avatar || '/assets/tabbar/profile.png'}}" />
+          </view>
           <view class="user-info">
             <text class="user-name">{{userInfo.username || '冥想用户'}}</text>
             <text class="user-email">{{userInfo.email || '完善您的个人信息'}}</text>
+            <text class="edit-link" bindtap="editProfile">编辑资料</text>
           </view>
-          <button class="edit-button" bindtap="editProfile">
-            <icon type="edit" size="20" color="#4A90E2" />
-          </button>
         </view>
 
 
-        <!-- 功能菜单 -->
-        <view class="menu-section">
-          <text class="section-title">功能设置</text>
+        <!-- 更多功能 -->
+        <view class="more-functions-section">
+          <text class="more-functions-title">更多功能</text>
           
-          <view class="menu-list">
-            <view class="menu-item" bindtap="viewSettings">
-              <view class="menu-left">
-                <icon type="setting" size="24" color="#4A90E2" />
-                <text class="menu-text">设置</text>
+          <view class="function-card" bindtap="shareApp">
+            <view class="function-left">
+              <image src="/assets/share.svg" class="function-icon" />
+              <view class="function-info">
+                <text class="function-title">分享应用</text>
+                <text class="function-subtitle">邀请好友一起冥想</text>
               </view>
-              <icon type="right" size="16" color="#78909C" />
             </view>
-            
-            <view class="menu-item" bindtap="viewHelp">
-              <view class="menu-left">
-                <icon type="help" size="24" color="#4A90E2" />
-                <text class="menu-text">帮助与反馈</text>
+            <icon type="right" size="16" color="#78909C" class="function-arrow" />
+          </view>
+          
+          <view class="function-card" bindtap="viewFeedback">
+            <view class="function-left">
+              <image src="/assets/feedback.svg" class="function-icon" />
+              <view class="function-info">
+                <text class="function-title">意见反馈</text>
+                <text class="function-subtitle">帮助我们改进产品</text>
               </view>
-              <icon type="right" size="16" color="#78909C" />
             </view>
-            
-            <view class="menu-item" bindtap="handleLogout">
-              <view class="menu-left">
-                <icon type="logout" size="24" color="#FF6B6B" />
-                <text class="menu-text logout-text">退出登录</text>
+            <icon type="right" size="16" color="#78909C" class="function-arrow" />
+          </view>
+          
+          <view class="function-card" bindtap="viewAbout">
+            <view class="function-left">
+              <image src="/assets/about.svg" class="function-icon" />
+              <view class="function-info">
+                <text class="function-title">关于我们</text>
+                <text class="function-subtitle">了解应用信息</text>
               </view>
-              <icon type="right" size="16" color="#78909C" />
             </view>
+            <icon type="right" size="16" color="#78909C" class="function-arrow" />
           </view>
         </view>
 
