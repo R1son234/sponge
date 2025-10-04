@@ -29,27 +29,13 @@
             <text class="stat-label">总次数</text>
           </view>
           <view class="stat-card">
-            <text class="stat-value">{{formatTime(stats.totalTime || 0)}}</text>
+            <text class="stat-value">{{stats.totalTime || 0}}</text>
             <text class="stat-label">总时长</text>
           </view>
         </view>
       </view>
 
-      <!-- 日期选择器 -->
-      <view class="date-picker-section">
-        <text class="section-title">选择日期</text>
-        <picker 
-          mode="date" 
-          value="{{selectedDate}}" 
-          bindchange="onDateChange"
-          class="date-picker"
-        >
-          <view class="picker-display">
-            <text>{{formatDate(selectedDate)}}</text>
-            <icon type="calendar" size="20" color="#4A90E2" />
-          </view>
-        </picker>
-      </view>
+
 
       <!-- 当日记录 -->
       <view class="records-section">
@@ -81,12 +67,58 @@
         </view>
       </view>
 
-      <!-- 历史统计图表 -->
-      <view class="chart-section">
-        <text class="section-title">历史统计</text>
-        <view class="chart-placeholder">
-          <text class="chart-text">图表功能开发中</text>
-          <text class="chart-description">未来版本将提供详细的统计图表分析</text>
+      <!-- 打卡日历 -->
+      <view class="calendar-section">
+        <view class="calendar-header">
+          <text class="section-title">打卡日历</text>
+          <view class="calendar-controls">
+            <button class="calendar-btn" bindtap="prevMonth">
+              <text class="btn-text">‹</text>
+            </button>
+            <text class="calendar-title">{{currentYear}}年{{currentMonth + 1}}月</text>
+            <button class="calendar-btn" bindtap="nextMonth">
+              <text class="btn-text">›</text>
+            </button>
+          </view>
+        </view>
+        
+        <view class="calendar-grid">
+          <!-- 星期标题 -->
+          <view class="week-header">
+            <text class="week-day">日</text>
+            <text class="week-day">一</text>
+            <text class="week-day">二</text>
+            <text class="week-day">三</text>
+            <text class="week-day">四</text>
+            <text class="week-day">五</text>
+            <text class="week-day">六</text>
+          </view>
+          
+          <!-- 日历天数 -->
+          <view class="calendar-days">
+            <view 
+              wx:for="{{calendarData}}" 
+              wx:key="dateStr" 
+              class="calendar-day {{item.isCurrentMonth ? 'current-month' : 'other-month'}} {{item.isToday ? 'today' : ''}} {{item.hasRecord ? 'has-record' : ''}}"
+            >
+              <text class="day-number">{{item.day}}</text>
+              <view wx:if="{{item.hasRecord}}" class="record-indicator">
+                <text class="indicator-dot"></text>
+                <text wx:if="{{item.recordCount > 1}}" class="record-count">{{item.recordCount}}</text>
+              </view>
+            </view>
+          </view>
+        </view>
+        
+        <view class="calendar-legend">
+          <view class="legend-item">
+            <view class="legend-dot today"></view>
+            <text class="legend-text">今天</text>
+          </view>
+          <view class="legend-item">
+            <view class="legend-dot has-record"></view>
+            <text class="legend-text">有打卡记录</text>
+          </view>
         </view>
       </view>
 

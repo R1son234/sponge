@@ -10,9 +10,12 @@ Page({
     stats: null,
     records: [],
     currentDate: new Date(),
-    selectedDate: new Date(),
     loading: true,
-    error: null
+    error: null,
+    // 日历数据
+    calendarData: [],
+    currentMonth: new Date().getMonth(),
+    currentYear: new Date().getFullYear()
   },
 
   onLoad() {
@@ -51,6 +54,9 @@ Page({
         records: records || [],
         loading: false 
       });
+      
+      // 生成日历数据
+      this.generateCalendarData(records || []);
     } catch (error) {
       console.error('加载数据失败:', error);
       this.setData({ 
@@ -60,31 +66,9 @@ Page({
     }
   },
 
-  // 日期选择处理
-  onDateChange(e) {
-    const selectedDate = new Date(e.detail.value);
-    this.setData({ selectedDate });
-    this.filterRecordsByDate(selectedDate);
-  },
 
-  // 根据日期过滤记录
-  filterRecordsByDate(date) {
-    const filteredRecords = this.data.records.filter(record => {
-      const recordDate = new Date(record.date);
-      return recordDate.toDateString() === date.toDateString();
-    });
-    
-    this.setData({ filteredRecords });
-  },
 
-  // 格式化日期
-  formatDate(date) {
-    return date.toLocaleDateString('zh-CN', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit'
-    });
-  },
+
 
   // 格式化时间
   formatTime(minutes) {
@@ -109,6 +93,81 @@ Page({
     this.loadData().finally(() => {
       wx.stopPullDownRefresh();
     });
+  },
+
+  // 生成日历数据
+  generateCalendarData(records) {
+    const { currentMonth, currentYear } = this.data;
+    
+    // 获取当前月的第一天和最后一天
+    const firstDay = new Date(currentYear, currentMonth, 1);
+    const lastDay = new Date(currentYear, currentMonth + 1, 0);
+    
+    // 计算日历需要显示的天数（包括上个月和下个月的部分）
+    const startDate = new Date(firstDay);
+    startDate.setDate(startDate.getDate() - firstDay.getDay());
+    
+    const endDate = new Date(lastDay);
+    endDate.setDate(endDate.getDate() + (6 - lastDay.getDay()));
+    
+    const calendarDays = [];
+    const currentDate = new Date(startDate);
+    
+    // 生成日历天数
+    while (currentDate <= endDate) {
+      const dateStr = currentDate.toISOString().split('T')[0];
+      const dayRecords = records.filter(record => {
+        const recordDate = new Date(record.date);
+        return recordDate.toDateString() === currentDate.toDateString();
+      });
+      
+      calendarDays.push({
+        date: new Date(currentDate),
+        dateStr: dateStr,
+        day: currentDate.getDate(),
+        isCurrentMonth: currentDate.getMonth() === currentMonth,
+        isToday: currentDate.toDateString() === new Date().toDateString(),
+        hasRecord: dayRecords.length > 0,
+        recordCount: dayRecords.length,
+        totalDuration: dayRecords.reduce((sum, record) => sum + (record.duration || 0), 0)
+      });
+      
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+    
+    this.setData({
+      calendarData: calendarDays,
+      currentMonth,
+      currentYear
+    });
+  },
+
+  // 切换到上个月
+  prevMonth() {
+    let { currentMonth, currentYear } = this.data;
+    if (currentMonth === 0) {
+      currentMonth = 11;
+      currentYear--;
+    } else {
+      currentMonth--;
+    }
+    
+    this.setData({ currentMonth, currentYear });
+    this.generateCalendarData(this.data.records);
+  },
+
+  // 切换到下个月
+  nextMonth() {
+    let { currentMonth, currentYear } = this.data;
+    if (currentMonth === 11) {
+      currentMonth = 0;
+      currentYear++;
+    } else {
+      currentMonth++;
+    }
+    
+    this.setData({ currentMonth, currentYear });
+    this.generateCalendarData(this.data.records);
   },
 
   // 错误重试

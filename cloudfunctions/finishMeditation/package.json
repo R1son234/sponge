@@ -1,7 +1,7 @@
 {
-  "name": "calculatecontinuousdays",
+  "name": "finishmeditation",
   "version": "1.0.0",
-  "description": "",
+  "description": "完成冥想并更新成就",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

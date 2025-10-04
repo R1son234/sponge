@@ -60,9 +60,9 @@
             data-meditation="{{item}}"
           >
             <view class="quick-start-icon">
-              <image wx:if="{{item.icon === 'success'}}" src="/assets/leaf.svg" mode="aspectFit" class="icon-image" />
-              <image wx:elif="{{item.icon === 'love'}}" src="/assets/heart.svg" mode="aspectFit" class="icon-image" />
-              <image wx:elif="{{item.icon === 'star'}}" src="/assets/moon.svg" mode="aspectFit" class="icon-image" />
+              <image wx:if="{{item.icon === 'success'}}" src="/assets/heart.svg" mode="aspectFit" class="icon-image" />
+              <image wx:elif="{{item.icon === 'love'}}" src="/assets/moon.svg" mode="aspectFit" class="icon-image" />
+              <image wx:elif="{{item.icon === 'star'}}" src="/assets/breath.svg" mode="aspectFit" class="icon-image" />
             </view>
             <text class="quick-start-name">{{item.name}}</text>
             <text class="quick-start-duration">{{item.duration}}分钟</text>

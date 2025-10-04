@@ -108,44 +108,6 @@
   background-color: var(--light-blue);
 }
 
-/* 统计区域 */
-.stats-section {
-  margin-bottom: 32rpx;
-}
-
-.section-title {
-  font-size: 32rpx;
-  font-weight: 600;
-  color: var(--text);
-  margin-bottom: 24rpx;
-}
-
-.stats-grid {
-  flex-direction: row;
-  justify-content: space-between;
-  gap: 24rpx;
-}
-
-.stat-item {
-  flex: 1;
-  background-color: var(--surface);
-  border-radius: 16rpx;
-  padding: 24rpx;
-  align-items: center;
-  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
-}
-
-.stat-value {
-  font-size: 36rpx;
-  font-weight: bold;
-  color: var(--primary);
-  margin-bottom: 8rpx;
-}
-
-.stat-label {
-  font-size: 22rpx;
-  color: var(--text-secondary);
-}
 
 /* 菜单区域 */
 .menu-section {

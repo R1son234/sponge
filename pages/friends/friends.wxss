@@ -26,87 +26,50 @@
   text-align: center;
 }
 
-/* 标签页样式 */
-.tabs {
-  flex-direction: row;
-  background-color: var(--surface);
-  border-bottom: 2rpx solid var(--border);
-}
-
-.tab {
-  flex: 1;
-  padding: 32rpx;
-  text-align: center;
-  font-size: 28rpx;
-  color: var(--text-secondary);
-  border-bottom: 4rpx solid transparent;
-}
-
-.tab-active {
-  color: var(--primary);
-  border-bottom-color: var(--primary);
-  font-weight: 600;
-}
-
-/* 标签内容 */
-.tab-content {
+/* 滚动容器 */
+.scroll-container {
+  height: 100%;
   padding: 32rpx;
 }
 
-.section-header {
+/* 模块样式 */
+.module {
+  margin-bottom: 48rpx;
+}
+
+.module-header {
+  position: relative;
+  display: flex;
   flex-direction: row;
-  justify-content: space-between;
   align-items: center;
-  margin-bottom: 32rpx;
+  margin-bottom: 24rpx;
+  width: 100%;
+  min-height: 40rpx;
 }
 
-.section-title {
-  font-size: 36rpx;
+.module-title {
+  font-size: 32rpx;
   font-weight: 600;
   color: var(--text);
+  flex: 1;
 }
 
-.friends-count,
-.activities-count {
-  font-size: 24rpx;
-  color: var(--text-secondary);
+.add-friend-btn {
+  font-size: 26rpx;
+  color: var(--primary);
+  font-weight: 500;
+  white-space: nowrap;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
-/* 好友列表 */
-.friends-list {
-  gap: 24rpx;
-}
-
-.friend-card {
+.module-card {
   background-color: var(--surface);
   border-radius: 16rpx;
-  padding: 24rpx;
-  flex-direction: row;
-  align-items: center;
+  padding: 32rpx;
   box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
-}
-
-.friend-avatar {
-  width: 80rpx;
-  height: 80rpx;
-  border-radius: 40rpx;
-  margin-right: 24rpx;
-}
-
-.friend-info {
-  flex: 1;
-}
-
-.friend-name {
-  font-size: 28rpx;
-  font-weight: 600;
-  color: var(--text);
-  margin-bottom: 4rpx;
-}
-
-.friend-status {
-  font-size: 22rpx;
-  color: var(--text-secondary);
 }
 
 /* 动态列表 */
@@ -114,17 +77,21 @@
   gap: 24rpx;
 }
 
-.activity-card {
-  background-color: var(--surface);
-  border-radius: 16rpx;
-  padding: 24rpx;
-  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+.activity-item {
+  padding: 24rpx 0;
+  border-bottom: 1rpx solid var(--border);
+  align-items: center;
+}
+
+.activity-item:last-child {
+  border-bottom: none;
 }
 
 .activity-header {
   flex-direction: row;
   align-items: center;
   margin-bottom: 16rpx;
+  justify-content: center;
 }
 
 .activity-avatar {
@@ -136,6 +103,7 @@
 
 .activity-user {
   flex: 1;
+  align-items: center;
 }
 
 .user-name {
@@ -143,11 +111,13 @@
   font-weight: 600;
   color: var(--text);
   margin-bottom: 4rpx;
+  text-align: center;
 }
 
 .activity-time {
   font-size: 20rpx;
   color: var(--text-secondary);
+  text-align: center;
 }
 
 .activity-content {
@@ -176,40 +146,91 @@
   padding: 12rpx;
   background-color: var(--light-blue);
   border-radius: 8rpx;
+  text-align: center;
+}
+
+/* 好友列表 */
+.friends-list {
+  gap: 20rpx;
+}
+
+.friend-item {
+  flex-direction: row;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid var(--border);
+}
+
+.friend-item:last-child {
+  border-bottom: none;
+}
+
+.friend-avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 40rpx;
+  margin-right: 24rpx;
+}
+
+.friend-info {
+  flex: 1;
+}
+
+.friend-name {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 4rpx;
+}
+
+.friend-account {
+  font-size: 22rpx;
+  color: var(--text-secondary);
 }
 
 /* 空状态 */
-.empty-state {
-  background-color: var(--surface);
-  border-radius: 16rpx;
-  padding: 64rpx 32rpx;
+.empty-content {
   align-items: center;
   text-align: center;
-  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+  padding: 64rpx 0;
+  flex-direction: column;
 }
 
-.empty-text {
+.empty-icon {
+  width: 60rpx;
+  height: 60rpx;
+  margin-bottom: 24rpx;
+}
+
+.empty-title {
   font-size: 28rpx;
   color: var(--text);
   font-weight: 600;
-  margin-bottom: 16rpx;
+  margin-bottom: 12rpx;
+  display: block;
+  width: 100%;
 }
 
-.empty-subtext {
+.empty-subtitle {
   font-size: 24rpx;
   color: var(--text-secondary);
   margin-bottom: 32rpx;
+  display: block;
+  width: 100%;
 }
 
 /* 响应式适配 */
 @media (max-width: 768px) {
-  .tab-content {
+  .scroll-container {
     padding: 16rpx;
   }
   
-  .friend-card,
-  .activity-card {
-    padding: 20rpx 16rpx;
+  .module {
+    margin-bottom: 32rpx;
+  }
+  
+  .module-card {
+    padding: 24rpx;
   }
   
   .friend-avatar {
@@ -224,7 +245,7 @@
     margin-right: 12rpx;
   }
   
-  .empty-state {
-    padding: 48rpx 24rpx;
+  .empty-content {
+    padding: 32rpx 0;
   }
 }

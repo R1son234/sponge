@@ -2,7 +2,6 @@
 const app = getApp();
 const api = require('../../utils/api');
 const userAPI = api.userAPI;
-const meditationAPI = api.meditationAPI;
 
 const authService = require('../../utils/authService');
 
@@ -10,7 +9,6 @@ Page({
   data: {
     // 页面数据
     userInfo: null,
-    stats: null,
     loading: true,
     error: null,
     isLoggedIn: false
@@ -42,19 +40,15 @@ Page({
     try {
       this.setData({ loading: true, error: null });
       
-      // 获取用户信息和统计
+      // 获取用户信息
       // 获取当前用户ID
       const currentUser = authService.getCurrentUser();
       const userId = currentUser._id;
 
-      const [userInfo, stats] = await Promise.all([
-        userAPI.getUser(userId),
-        meditationAPI.getStats(userId)
-      ]);
+      const userInfo = await userAPI.getUser(userId);
       
       this.setData({ 
         userInfo: userInfo || {},
-        stats: stats || {},
         loading: false 
       });
     } catch (error) {
@@ -98,8 +92,7 @@ Page({
     
     this.setData({
       isLoggedIn: false,
-      userInfo: null,
-      stats: null
+      userInfo: null
     });
     
     wx.showToast({
@@ -129,16 +122,7 @@ Page({
     });
   },
 
-  // 格式化时间
-  formatTime(minutes) {
-    const hours = Math.floor(minutes / 60);
-    const mins = minutes % 60;
-    
-    if (hours > 0) {
-      return `${hours}小时${mins}分钟`;
-    }
-    return `${mins}分钟`;
-  },
+
 
   // 错误重试
   retry() {

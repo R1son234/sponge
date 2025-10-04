@@ -90,10 +90,10 @@
 .stats-row {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   width: 100%;
-  gap: 20rpx;
+  gap: 16rpx;
 }
 
 .stat-item {
@@ -103,6 +103,10 @@
   justify-content: center;
   flex: 1;
   min-width: 0;
+  background-color: var(--surface);
+  border-radius: 24rpx;
+  padding: 24rpx 16rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
 }
 
 .stat-value {

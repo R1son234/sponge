@@ -40,25 +40,6 @@
           </button>
         </view>
 
-        <!-- 统计信息 -->
-        <view class="stats-section">
-          <text class="section-title">我的统计</text>
-          
-          <view class="stats-grid">
-            <view class="stat-item">
-              <text class="stat-value">{{stats.consecutiveDays || 0}}</text>
-              <text class="stat-label">连续天数</text>
-            </view>
-            <view class="stat-item">
-              <text class="stat-value">{{stats.totalSessions || 0}}</text>
-              <text class="stat-label">冥想次数</text>
-            </view>
-            <view class="stat-item">
-              <text class="stat-value">{{formatTime(stats.totalTime || 0)}}</text>
-              <text class="stat-label">总时长</text>
-            </view>
-          </view>
-        </view>
 
         <!-- 功能菜单 -->
         <view class="menu-section">

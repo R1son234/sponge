@@ -13,90 +13,82 @@
 
   <!-- 正常内容 -->
   <view wx:if="{{!loading && !error}}">
-    <!-- 标签页切换 -->
-    <view class="tabs">
-      <view 
-        class="tab {{activeTab === 'friends' ? 'tab-active' : ''}}" 
-        bindtap="switchTab" 
-        data-tab="friends"
-      >
-        <text>好友列表</text>
-      </view>
-      <view 
-        class="tab {{activeTab === 'activities' ? 'tab-active' : ''}}" 
-        bindtap="switchTab" 
-        data-tab="activities"
-      >
-        <text>好友动态</text>
-      </view>
-    </view>
-
-    <!-- 好友列表 -->
-    <view wx:if="{{activeTab === 'friends'}}" class="tab-content">
-      <view class="section-header">
-        <text class="section-title">我的好友</text>
-        <text class="friends-count">共 {{friends.length}} 位好友</text>
-      </view>
-
-      <view wx:if="{{friends.length > 0}}" class="friends-list">
-        <view 
-          wx:for="{{friends}}" 
-          wx:key="id" 
-          class="friend-card"
-          bindtap="viewFriendDetail"
-          data-id="{{item.id}}"
-        >
-          <image class="friend-avatar" src="{{item.avatar || '/assets/tabbar/profile.png'}}" />
-          <view class="friend-info">
-            <text class="friend-name">{{item.username}}</text>
-            <text class="friend-status">最近活跃: {{formatTime(item.lastActive)}}</text>
-          </view>
-          <icon type="right" size="16" color="#78909C" />
+    <scroll-view scroll-y="true" class="scroll-container" enhanced="{{true}}" show-scrollbar="{{false}}">
+      
+      <!-- 好友动态模块 -->
+      <view class="module">
+        <view class="module-header">
+          <text class="module-title">好友动态</text>
         </view>
-      </view>
-
-      <view wx:else class="empty-state">
-        <text class="empty-text">暂无好友</text>
-        <button class="button button-primary button-medium" bindtap="addFriend">
-          添加好友
-        </button>
-      </view>
-    </view>
-
-    <!-- 好友动态 -->
-    <view wx:if="{{activeTab === 'activities'}}" class="tab-content">
-      <view class="section-header">
-        <text class="section-title">好友动态</text>
-        <text class="activities-count">共 {{activities.length}} 条动态</text>
-      </view>
-
-      <view wx:if="{{activities.length > 0}}" class="activities-list">
-        <view 
-          wx:for="{{activities}}" 
-          wx:key="id" 
-          class="activity-card"
-        >
-          <view class="activity-header">
-            <image class="activity-avatar" src="{{item.user.avatar || '/assets/tabbar/profile.png'}}" />
-            <view class="activity-user">
-              <text class="user-name">{{item.user.username}}</text>
-              <text class="activity-time">{{formatTime(item.date)}}</text>
+        
+        <view class="module-card">
+          <view wx:if="{{activities.length > 0}}" class="activities-list">
+            <view 
+              wx:for="{{activities}}" 
+              wx:key="id" 
+              class="activity-item"
+            >
+              <view class="activity-header">
+                <image class="activity-avatar" src="{{item.user.avatar || '/assets/tabbar/profile.png'}}" />
+                <view class="activity-user">
+                  <text class="user-name">{{item.user.username}}</text>
+                  <text class="activity-time">{{formatTime(item.date)}}</text>
+                </view>
+              </view>
+              
+              <view class="activity-content">
+                <text class="activity-type">完成了 {{item.type}} 冥想</text>
+                <text class="activity-duration">时长: {{item.duration}} 分钟</text>
+              </view>
+              
+              <text wx:if="{{item.notes}}" class="activity-notes">"{{item.notes}}"</text>
             </view>
           </view>
-          
-          <view class="activity-content">
-            <text class="activity-type">完成了 {{item.type}} 冥想</text>
-            <text class="activity-duration">时长: {{item.duration}} 分钟</text>
+
+          <view wx:else class="empty-content">
+            <image src="/assets/clock.svg" class="empty-icon" />
+            <text class="empty-title">暂无动态</text>
+            <text class="empty-subtitle">好友完成冥想后，动态会在这里展示</text>
           </view>
-          
-          <text wx:if="{{item.notes}}" class="activity-notes">"{{item.notes}}"</text>
         </view>
       </view>
 
-      <view wx:else class="empty-state">
-        <text class="empty-text">暂无好友动态</text>
-        <text class="empty-subtext">好友的冥想动态将显示在这里</text>
+      <!-- 我的好友模块 -->
+      <view class="module">
+        <view class="module-header">
+          <text class="module-title">我的好友</text>
+          <text class="add-friend-btn" bindtap="addFriend">添加好友</text>
+        </view>
+        
+        <view class="module-card">
+          <view wx:if="{{friends.length > 0}}" class="friends-list">
+            <view 
+              wx:for="{{friends}}" 
+              wx:key="id" 
+              class="friend-item"
+              bindtap="viewFriendDetail"
+              data-id="{{item.id}}"
+            >
+              <image class="friend-avatar" src="{{item.avatar || '/assets/tabbar/profile.png'}}" />
+              <view class="friend-info">
+                <text class="friend-name">{{item.username}}</text>
+                <text class="friend-account">{{item.account || '用户账号'}}</text>
+              </view>
+              <icon type="right" size="16" color="#78909C" />
+            </view>
+          </view>
+
+          <view wx:else class="empty-content">
+            <image src="/assets/tabbar/friends.svg" class="empty-icon" />
+            <text class="empty-title">还没有好友</text>
+            <text class="empty-subtitle">添加好友，一起分享冥想的美好时光</text>
+            <button class="button button-primary button-medium" bindtap="addFriend">
+              添加第一个好友
+            </button>
+          </view>
+        </view>
       </view>
-    </view>
+
+    </scroll-view>
   </view>
 </view>

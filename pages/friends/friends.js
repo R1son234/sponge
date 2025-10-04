@@ -10,8 +10,7 @@ Page({
     friends: [],
     activities: [],
     loading: true,
-    error: null,
-    activeTab: 'friends' // friends 或 activities
+    error: null
   },
 
   onLoad() {
@@ -59,11 +58,7 @@ Page({
     }
   },
 
-  // 切换标签页
-  switchTab(e) {
-    const tab = e.currentTarget.dataset.tab;
-    this.setData({ activeTab: tab });
-  },
+
 
   // 添加好友
   async addFriend() {

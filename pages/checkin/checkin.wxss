@@ -44,55 +44,40 @@
 }
 
 .stats-grid {
+  display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  gap: 24rpx;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  gap: 16rpx;
 }
 
 .stat-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   flex: 1;
+  min-width: 0;
   background-color: var(--surface);
   border-radius: 24rpx;
-  padding: 32rpx;
-  align-items: center;
-  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.1);
+  padding: 24rpx 16rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
 }
 
 .stat-value {
-  font-size: 48rpx;
+  font-size: 52rpx;
   font-weight: bold;
   color: var(--primary);
   margin-bottom: 8rpx;
 }
 
 .stat-label {
-  font-size: 24rpx;
+  font-size: 26rpx;
   color: var(--text-secondary);
 }
 
-/* 日期选择器 */
-.date-picker-section {
-  margin-bottom: 48rpx;
-}
 
-.date-picker {
-  background-color: var(--surface);
-  border-radius: 24rpx;
-  padding: 24rpx;
-  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
-}
-
-.picker-display {
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.picker-display text {
-  font-size: 28rpx;
-  color: var(--text);
-  font-weight: 500;
-}
 
 /* 记录区域 */
 .records-section {
@@ -193,6 +178,169 @@
   color: var(--text-secondary);
 }
 
+/* 日历样式 */
+.calendar-section {
+  margin-bottom: 48rpx;
+}
+
+.calendar-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 24rpx;
+}
+
+.calendar-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 32rpx;
+  margin-top: 16rpx;
+}
+
+.calendar-title {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: var(--text);
+  min-width: 160rpx;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.calendar-btn {
+  background-color: transparent;
+  border: none;
+  border-radius: 50%;
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: all 0.2s ease;
+}
+
+.calendar-btn:active {
+  background-color: rgba(74, 144, 226, 0.1);
+}
+
+.btn-text {
+  font-size: 32rpx;
+  color: var(--primary);
+  font-weight: bold;
+}
+
+.calendar-grid {
+  background-color: var(--surface);
+  border-radius: 16rpx;
+  padding: 24rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+}
+
+.week-header {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 16rpx;
+}
+
+.week-day {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-align: center;
+  flex: 1;
+}
+
+.calendar-days {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.calendar-day {
+  width: calc(100% / 7);
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8rpx;
+  position: relative;
+  padding: 8rpx;
+}
+
+.calendar-day.other-month {
+  opacity: 0.4;
+}
+
+.calendar-day.today {
+  background-color: rgba(74, 144, 226, 0.1);
+  border: 2rpx solid var(--primary);
+}
+
+.calendar-day.has-record {
+  background-color: rgba(76, 175, 80, 0.1);
+}
+
+.day-number {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.record-indicator {
+  position: absolute;
+  bottom: 4rpx;
+  display: flex;
+  align-items: center;
+  gap: 2rpx;
+}
+
+.indicator-dot {
+  width: 8rpx;
+  height: 8rpx;
+  border-radius: 50%;
+  background-color: #4CAF50;
+}
+
+.record-count {
+  font-size: 16rpx;
+  color: #4CAF50;
+  font-weight: 600;
+}
+
+.calendar-legend {
+  display: flex;
+  justify-content: center;
+  gap: 32rpx;
+  margin-top: 24rpx;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+}
+
+.legend-dot {
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 50%;
+}
+
+.legend-dot.today {
+  background-color: var(--primary);
+  border: 1rpx solid var(--primary);
+}
+
+.legend-dot.has-record {
+  background-color: #4CAF50;
+}
+
+.legend-text {
+  font-size: 20rpx;
+  color: var(--text-secondary);
+}
+
 /* 响应式适配 */
 @media (max-width: 768px) {
   .scroll-container {
@@ -200,19 +348,64 @@
   }
   
   .stats-grid {
-    flex-direction: column;
+    flex-direction: row;
+    gap: 12rpx;
   }
   
   .stat-card {
-    margin-bottom: 16rpx;
+    padding: 20rpx 12rpx;
+    min-width: 0;
+  }
+  
+  .stat-value {
+    font-size: 36rpx;
+  }
+  
+  .stat-label {
+    font-size: 20rpx;
   }
   
   .record-card {
     padding: 20rpx 16rpx;
   }
   
-  .empty-records,
-  .chart-placeholder {
+  .empty-records {
     padding: 48rpx 24rpx;
+  }
+  
+  /* 移动端日历适配 */
+  .calendar-grid {
+    padding: 16rpx;
+  }
+  
+  .calendar-title {
+    font-size: 28rpx;
+    min-width: 140rpx;
+  }
+  
+  .calendar-btn {
+    width: 48rpx;
+    height: 48rpx;
+    border: none;
+  }
+  
+  .btn-text {
+    font-size: 24rpx;
+  }
+  
+  .week-day {
+    font-size: 24rpx;
+  }
+  
+  .day-number {
+    font-size: 24rpx;
+  }
+  
+  .calendar-legend {
+    gap: 24rpx;
+  }
+  
+  .legend-text {
+    font-size: 18rpx;
   }
 }
