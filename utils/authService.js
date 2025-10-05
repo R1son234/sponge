@@ -27,8 +27,7 @@ class AuthService {
           username: userData.username,
           password: userData.password,
           email: userData.email || '',
-          nickname: userData.nickname || userData.username,
-          openid: userData.openid || ''
+          nickname: userData.nickname || userData.username
         }
       });
       
@@ -42,7 +41,7 @@ class AuthService {
         return loginResult;
       } else if (result.result.code === 409) {
         // 账号已存在
-        throw new Error(result.result.message || '该账号已注册');
+        throw new Error(result.result.message || '该用户名已注册');
       } else {
         // 其他错误
       }

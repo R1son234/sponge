@@ -1,18 +1,14 @@
 Page({
   data: {
-    openid: ''
+    username: ''
   },
   onLoad() {
-    wx.cloud.callFunction({
-      name: 'getOpenId',
-      success: res => {
-        this.setData({
-          openid: res.result.openid
-        })
-      },
-      fail: err => {
-        console.error('调用云函数失败', err)
-      }
-    })
+    // 检查是否已登录
+    const app = getApp()
+    if (app.globalData.userInfo && app.globalData.userInfo.username) {
+      this.setData({
+        username: app.globalData.userInfo.username
+      })
+    }
   }
 })

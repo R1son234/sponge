@@ -102,13 +102,15 @@
   opacity: 0.9;
 }
 
-.quick-login {
+.real-login-tip {
   text-align: center;
   margin-top: 30rpx;
+  padding: 20rpx;
+  background: var(--light-blue);
+  border-radius: 10rpx;
 }
 
-.quick-login-text {
-  color: var(--primary);
+.tip-text {
+  color: var(--text-secondary);
   font-size: 26rpx;
-  text-decoration: underline;
 }

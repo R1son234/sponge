@@ -2,9 +2,19 @@ const cloud = require('wx-server-sdk')
 const db = cloud.database()
 
 exports.main = async (event) => {
-  const { OPENID } = cloud.getWXContext()
+  const { username } = event;
+  
   try {
-    const user = await db.collection('users').where({ _openid: OPENID }).get()
+    // 参数验证
+    if (!username) {
+      return {
+        code: 400,
+        msg: '用户名不能为空'
+      };
+    }
+    
+    // 使用用户名查询用户信息
+    const user = await db.collection('users').where({ username: username }).get()
     if (user.data.length === 0) {
       return {
         code: 404,

@@ -57,11 +57,6 @@
         bindtap="onSubmit"
         loading="{{loading}}"
       >登录</button>
-
-      <!-- 快速访客登录 -->
-      <view class="quick-login">
-        <text class="quick-login-text" bindtap="onQuickLogin">快速体验（访客登录）</text>
-      </view>
     </view>
 
     <!-- 注册表单 -->

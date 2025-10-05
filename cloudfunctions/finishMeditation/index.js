@@ -169,17 +169,25 @@ const updateUserAchievements = async (userId, newAchievements) => {
 }
 
 exports.main = async (event, context) => {
-  const { duration, meditation_type, notes, start_time } = event
+  const { duration, meditation_type, notes, start_time, username } = event
   const wxContext = cloud.getWXContext()
-  const user_id = wxContext.OPENID
   
   // 参数验证
-  if (!duration || !start_time) {
+  if (!duration || !start_time || !username) {
     return {
       code: 400,
-      message: '冥想时长和开始时间为必填项'
+      message: '冥想时长、开始时间和用户名为必填项'
     }
   }
+
+  try {
+    // 基于username查询用户信息
+    const userResult = await db.collection('users').where({ username }).get()
+    if (userResult.data.length === 0) {
+      return { code: 404, message: '用户不存在' }
+    }
+
+    const user_id = userResult.data[0]._id
   
   try {
     // 1. 创建新的冥想记录

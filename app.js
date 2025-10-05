@@ -8,6 +8,9 @@ App({
     // 初始化全局数据
     this.initGlobalData();
     
+    // 清除demo账号会话数据
+    this.clearDemoSession();
+    
     // 检查登录状态并尝试自动登录
     this.checkLoginStatus();
     
@@ -72,9 +75,20 @@ App({
   checkLoginStatus() {
     if (authService.isLoggedIn()) {
       const userInfo = authService.getCurrentUser();
-      this.globalData.isLoggedIn = true;
-      this.globalData.userInfo = userInfo;
-      console.log('用户已登录:', userInfo);
+      
+      // 检查是否是demo账号
+      const clearDemoSession = require('./utils/clearDemoSession');
+      if (clearDemoSession.isDemoAccount(userInfo)) {
+        console.log('检测到demo账号，强制登出');
+        authService.logout();
+        this.globalData.isLoggedIn = false;
+        this.globalData.userInfo = null;
+        console.log('demo账号已强制登出');
+      } else {
+        this.globalData.isLoggedIn = true;
+        this.globalData.userInfo = userInfo;
+        console.log('用户已登录:', userInfo);
+      }
     } else {
       console.log('用户未登录');
     }
@@ -118,22 +132,18 @@ App({
     return true;
   },
   
-  // 开发环境数据初始化
+  // 开发环境数据初始化（已禁用，使用真实数据）
   async initDevelopmentData() {
-    try {
-      // 调用云函数初始化数据
-      const result = await wx.cloud.callFunction({
-        name: 'initData',
-        data: {
-          action: 'initAll'
-        }
-      });
-      
-      console.log('开发环境数据初始化完成:', result);
-    } catch (error) {
-      console.warn('开发环境数据初始化失败（不影响正常使用）:', error);
-      // 静默失败，不影响小程序正常启动
-      // 错误可能是云函数未部署或数据库集合不存在
+    console.log('开发环境数据初始化已禁用，使用真实用户数据');
+    // 不再调用不存在的initData云函数，避免demo账号问题
+  },
+  
+  // 清除demo账号会话数据
+  clearDemoSession() {
+    const clearDemoSession = require('./utils/clearDemoSession');
+    const cleared = clearDemoSession.clearDemoSession();
+    if (cleared) {
+      console.log('demo账号会话数据已清除');
     }
   }
 });

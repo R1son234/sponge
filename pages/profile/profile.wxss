@@ -27,12 +27,19 @@
   font-weight: bold;
   color: var(--text);
   margin-bottom: 16rpx;
+  display: block;
+  width: 100%;
+  text-align: center;
 }
 
 .login-subtitle {
   font-size: 28rpx;
   color: var(--text-secondary);
   margin-bottom: 48rpx;
+  display: block;
+  width: 100%;
+  text-align: center;
+  line-height: 1.4;
 }
 
 /* 加载和错误状态 */

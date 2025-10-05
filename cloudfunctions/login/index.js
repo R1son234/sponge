@@ -6,27 +6,21 @@ const db = cloud.database()
 const cryptoUtils = require('./cryptoUtils')
 
 exports.main = async (event, context) => {
-  const { username, password, openid } = event;
+  const { username, password } = event;
   
   try {
-    // 构建查询条件：支持用户名或openid登录
-    let queryCondition = {};
-    
-    if (openid) {
-      // 优先使用openid登录
-      queryCondition.openid = openid;
-    } else if (username) {
-      // 使用用户名登录
-      queryCondition.username = username;
-    } else {
+    // 参数验证
+    if (!username || !password) {
       return {
         code: 400,
-        message: '请输入用户名或使用微信授权登录'
+        message: '用户名和密码不能为空'
       };
     }
     
-    // 查询用户信息
-    const users = await db.collection('users').where(queryCondition).get()
+    // 使用用户名查询用户信息
+    const users = await db.collection('users').where({
+      username: username
+    }).get()
     
     if (users.data.length === 0) {
       return {
@@ -37,15 +31,13 @@ exports.main = async (event, context) => {
     
     const user = users.data[0];
     
-    // 如果是用户名密码登录，需要验证密码
-    if (username && password) {
-      const isPasswordValid = cryptoUtils.verifyPassword(password, user.password, user.salt);
-      if (!isPasswordValid) {
-        return {
-          code: 401,
-          message: '用户名或密码错误'
-        };
-      }
+    // 验证密码
+    const isPasswordValid = cryptoUtils.verifyPassword(password, user.password, user.salt);
+    if (!isPasswordValid) {
+      return {
+        code: 401,
+        message: '用户名或密码错误'
+      };
     }
     
     // 更新最后登录时间
@@ -55,7 +47,7 @@ exports.main = async (event, context) => {
       }
     });
     
-    // 登录成功，返回用户信息
+    // 登录成功，返回用户信息（移除openid字段）
     return {
       code: 200,
       data: {
@@ -63,8 +55,7 @@ exports.main = async (event, context) => {
         username: user.username,
         nickname: user.nickname || user.username,
         email: user.email,
-        avatarUrl: user.avatar || '/assets/avatar.png',
-        openid: user.openid || ''
+        avatarUrl: user.avatar || '/assets/avatar.png'
       },
       message: '登录成功'
     };

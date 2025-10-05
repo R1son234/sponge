@@ -116,9 +116,23 @@ Page({
     const { username, password } = this.data.formData;
 
     try {
-      const result = await authService.login({ username, password });
+      // 调用登录云函数
+      const result = await wx.cloud.callFunction({
+        name: 'login',
+        data: {
+          username: username,
+          password: password
+        }
+      });
 
-      if (result.success) {
+      if (result.result.code === 200) {
+        // 登录成功，保存用户信息
+        const userInfo = result.result.data;
+        authService.login(userInfo);
+        
+        // 更新全局登录状态
+        app.onUserLogin(userInfo);
+        
         wx.showToast({
           title: '登录成功',
           icon: 'success'
@@ -130,6 +144,8 @@ Page({
             url: '/pages/home/home'
           });
         }, 1500);
+      } else {
+        throw new Error(result.result.message || '登录失败');
       }
     } catch (error) {
       throw error;
@@ -143,14 +159,25 @@ Page({
     const { username, password, email, nickname } = this.data.formData;
 
     try {
-      const result = await authService.register({
-        username,
-        password,
-        email,
-        nickname
+      // 调用注册云函数
+      const result = await wx.cloud.callFunction({
+        name: 'register',
+        data: {
+          username: username,
+          password: password,
+          email: email,
+          nickname: nickname
+        }
       });
 
-      if (result.success) {
+      if (result.result.code === 201) {
+        // 注册成功，保存用户信息
+        const userInfo = result.result.data;
+        authService.login(userInfo);
+        
+        // 更新全局登录状态
+        app.onUserLogin(userInfo);
+        
         wx.showToast({
           title: '注册成功',
           icon: 'success'
@@ -162,6 +189,8 @@ Page({
             url: '/pages/home/home'
           });
         }, 1500);
+      } else {
+        throw new Error(result.result.message || '注册失败');
       }
     } catch (error) {
       throw error;
@@ -170,11 +199,11 @@ Page({
     }
   },
 
-  // 快速访客登录
+  // 快速访客登录（已禁用，使用真实数据）
   onQuickLogin() {
     wx.showModal({
       title: '提示',
-      content: '请使用您的账号密码登录',
+      content: '访客登录功能已禁用，请使用您的真实账号密码登录',
       showCancel: false
     });
   }

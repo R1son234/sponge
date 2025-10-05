@@ -5,11 +5,22 @@ const db = cloud.database()
 const _ = db.command
 
 exports.main = async (event, context) => {
+  const { page = 1, pageSize = 10, username } = event
   const wxContext = cloud.getWXContext()
-  const user_id = wxContext.OPENID
-  const { page = 1, pageSize = 10 } = event
+
+  if (!username) {
+    return { code: -1, msg: '用户名不能为空' }
+  }
 
   try {
+    // 基于username查询用户信息
+    const userResult = await db.collection('users').where({ username }).get()
+    if (userResult.data.length === 0) {
+      return { code: -1, msg: '用户不存在' }
+    }
+
+    const user_id = userResult.data[0]._id
+
     // 获取用户好友列表（已通过的好友）
     const friendships = await db.collection('friendships')
       .where({

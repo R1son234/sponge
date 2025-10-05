@@ -38,10 +38,10 @@ const verifyPassword = (password, hashedPassword, salt) => {
 
 /**
  * 用户注册云函数
- * 包含幂等判断，防止重复注册（支持openID、用户名、邮箱的唯一性检查）
+ * 包含幂等判断，防止重复注册（基于username作为唯一键）
  */
 exports.main = async (event, context) => {
-  const { username, password, email, nickname, openid } = event;
+  const { username, password, email, nickname } = event;
   
   console.log('register event:', event);
 
@@ -54,7 +54,7 @@ exports.main = async (event, context) => {
       };
     }
 
-    // 检查用户名是否已存在
+    // 检查用户名是否已存在（唯一键检查）
     const existingUsername = await db.collection('users').where({
       username: username
     }).get()
@@ -80,25 +80,11 @@ exports.main = async (event, context) => {
       }
     }
 
-    // 如果提供了openid，检查openid是否已存在
-    if (openid) {
-      const existingOpenid = await db.collection('users').where({
-        openid: openid
-      }).get()
-      
-      if (existingOpenid.data.length > 0) {
-        return {
-          code: 409,
-          message: '该微信账号已注册'
-        };
-      }
-    }
-
     // 生成盐值和加密密码
     const salt = generateSalt();
     const hashedPassword = encryptPassword(password, salt);
     
-    // 创建用户数据
+    // 创建用户数据（移除openid字段）
     const userData = {
       username: username,
       email: email || '',
@@ -106,7 +92,6 @@ exports.main = async (event, context) => {
       salt: salt,
       nickname: nickname || username,
       avatar: '/assets/avatar.png',
-      openid: openid || '',
       createTime: db.serverDate(),
       updateTime: db.serverDate(),
       lastLoginTime: db.serverDate()
@@ -125,8 +110,7 @@ exports.main = async (event, context) => {
         username: userData.username,
         nickname: userData.nickname,
         email: userData.email,
-        avatarUrl: userData.avatar,
-        openid: userData.openid
+        avatarUrl: userData.avatar
       },
       message: '注册成功'
     };
@@ -137,7 +121,7 @@ exports.main = async (event, context) => {
     if (error.errCode === -502006) {
       return {
         code: 409,
-        message: '该账号已注册'
+        message: '该用户名已注册'
       };
     }
     
