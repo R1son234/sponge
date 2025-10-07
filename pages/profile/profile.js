@@ -102,16 +102,20 @@ Page({
       
       console.log('云函数返回的用户信息:', result);
 
-      if (result.result && result.result.code === 200) {
+      if (result && result.result && result.result.code === 200) {
         this.setData({ 
           userInfo: result.result.data || {},
           loading: false 
         });
         console.log('用户信息加载成功');
       } else {
-        console.error('用户信息获取失败:', result.result);
+        console.error('用户信息获取失败:', result);
+        let errorMsg = '用户信息获取失败';
+        if (result && result.result) {
+          errorMsg = result.result.msg || errorMsg;
+        }
         this.setData({ 
-          error: '用户信息获取失败',
+          error: errorMsg,
           loading: false 
         });
       }
@@ -194,8 +198,6 @@ Page({
       url: '/pages/help/help'
     });
   },
-
-
 
   // 用户登录事件处理
   onUserLogin(userInfo) {

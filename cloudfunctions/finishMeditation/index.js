@@ -189,7 +189,6 @@ exports.main = async (event, context) => {
 
     const user_id = userResult.data[0]._id
   
-  try {
     // 1. 创建新的冥想记录
     const newRecord = {
       user_id,
@@ -233,12 +232,12 @@ exports.main = async (event, context) => {
         consecutive_days: checkConsecutiveDays(recordsWithNew)
       }
     }
-    
   } catch (error) {
-    console.error('完成冥想失败:', error)
+    console.error('完成冥想过程出错:', error)
     return {
       code: 500,
-      message: '保存冥想记录失败，请稍后重试'
+      message: '服务器内部错误',
+      error: error.message
     }
   }
 }
