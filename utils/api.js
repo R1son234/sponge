@@ -254,7 +254,31 @@ const friendsAPI = {
   },
   
   // 发送好友请求
-  sendRequest: (data) => add('friend_requests', data)
+  sendRequest: (data) => add('friend_requests', data),
+  
+  // 发送好友申请（新接口）
+  sendFriendRequest: (currentUsername, targetUsername) => {
+    return new Promise((resolve, reject) => {
+      wx.cloud.callFunction({
+        name: 'sendFriendRequest',
+        data: {
+          username: targetUsername,
+          currentUsername: currentUsername
+        },
+        success: (res) => {
+          if (res.result.code === 200) {
+            resolve(res.result);
+          } else {
+            reject(new Error(res.result.msg || '发送好友申请失败'));
+          }
+        },
+        fail: (error) => {
+          console.error('调用云函数失败:', error);
+          reject(new Error('网络错误，请重试'));
+        }
+      });
+    });
+  }
 };
 
 module.exports = {

@@ -286,6 +286,23 @@ friendships：好友关系管理
 achievements：用户成就记录
 backend_music:背景音乐
 
+add_friend_records：好友邀请记录表
+- _id: 主键ID
+- applicant: 申请人username
+- targetUser: 被申请人username
+- applyTime: 申请时间
+- status: 状态（pending/approved/rejected）
+- acceptTime: 接受时间
+- createTime: 创建时间
+- updateTime: 更新时间
+
+云函数API
+
+sendFriendRequest：发送好友申请
+- 入参：username（目标用户名）, currentUsername（当前用户名）
+- 逻辑：检查用户是否存在，不能添加自己，创建邀请记录
+- 返回：成功/失败状态和消息
+
 状态管理
 
 useMeditation：冥想相关状态和操作

@@ -71,36 +71,38 @@ Page({
     }
 
     try {
-      // 让用户输入好友的用户名或ID
+      // 让用户输入好友的用户名
       wx.showModal({
         title: '添加好友',
-        content: '请输入好友的用户名或ID',
+        content: '请输入好友的用户名',
         editable: true,
-        placeholderText: '好友的用户名或ID',
+        placeholderText: '好友的用户名',
         success: async (res) => {
           if (res.confirm && res.content.trim()) {
-            const friendIdentifier = res.content.trim();
+            const username = res.content.trim();
             
             wx.showLoading({ title: '发送请求中...' });
             
-            // 获取当前用户ID
+            // 获取当前用户信息
             const currentUser = authService.getCurrentUser();
-            const userId = currentUser._id;
+            const currentUsername = currentUser.username;
             
             try {
-              await friendsAPI.sendFriendRequest(userId, friendIdentifier);
+              await friendsAPI.sendFriendRequest(currentUsername, username);
               
               wx.hideLoading();
               wx.showToast({
-                title: '好友请求已发送',
-                icon: 'success'
+                title: '已发送申请',
+                icon: 'success',
+                duration: 2000
               });
             } catch (error) {
               wx.hideLoading();
-              console.error('发送好友请求失败:', error);
+              console.error('发送好友申请失败:', error);
               wx.showToast({
-                title: '发送失败',
-                icon: 'error'
+                title: error.message || '发送失败',
+                icon: 'error',
+                duration: 3000
               });
             }
           }
