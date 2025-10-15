@@ -254,6 +254,7 @@
 .calendar-days {
   display: flex;
   flex-wrap: wrap;
+  width: 100%;
 }
 
 .calendar-day {
@@ -266,6 +267,7 @@
   border-radius: 8rpx;
   position: relative;
   padding: 8rpx;
+  box-sizing: border-box;
 }
 
 .calendar-day.other-month {

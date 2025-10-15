@@ -23,8 +23,9 @@ Page({
   },
 
   onShow() {
-    // 页面显示时刷新数据
+    // 页面显示时刷新数据并重新生成日历
     this.loadData();
+    this.generateCalendarData(this.data.records);
   },
 
   async loadData() {
@@ -104,17 +105,21 @@ Page({
     const lastDay = new Date(currentYear, currentMonth + 1, 0);
     
     // 计算日历需要显示的天数（包括上个月和下个月的部分）
+    // 修正日历逻辑：从周日开始排列日历
+    // JavaScript getDay()返回：0=周日, 1=周一, ..., 6=周六
     const startDate = new Date(firstDay);
-    startDate.setDate(startDate.getDate() - firstDay.getDay());
+    const firstDayOfWeek = firstDay.getDay();
     
-    const endDate = new Date(lastDay);
-    endDate.setDate(endDate.getDate() + (6 - lastDay.getDay()));
+    // 重新计算起始日期：让日历从周日开始
+    // 如果10月1日是周三(3)，需要向前3天到周日(0)
+    const daysToSubtract = firstDayOfWeek;
+    startDate.setDate(startDate.getDate() - daysToSubtract);
     
     const calendarDays = [];
     const currentDate = new Date(startDate);
     
-    // 生成日历天数
-    while (currentDate <= endDate) {
+    // 生成日历天数（42天，6行×7列）
+    for (let i = 0; i < 42; i++) {
       const dateStr = currentDate.toISOString().split('T')[0];
       const dayRecords = records.filter(record => {
         const recordDate = new Date(record.date);
