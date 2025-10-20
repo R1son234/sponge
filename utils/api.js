@@ -193,7 +193,24 @@ const del = (url, data = {}) => {
 // 冥想相关API
 const meditationAPI = {
   // 获取冥想类型
-  getTypes: () => query('meditation_types'),
+  getTypes: () => {
+    return new Promise((resolve, reject) => {
+      wx.cloud.callFunction({
+        name: 'getMeditationTypes',
+        success: (res) => {
+          if (res.result.code === 200) {
+            resolve(res.result.data);
+          } else {
+            reject(new Error(res.result.message || '获取冥想类型失败'));
+          }
+        },
+        fail: (error) => {
+          console.error('调用云函数失败:', error);
+          reject(new Error('网络错误，请重试'));
+        }
+      });
+    });
+  },
   
   // 获取冥想记录
   getRecords: (userId) => query('meditation_records', { userId }),
